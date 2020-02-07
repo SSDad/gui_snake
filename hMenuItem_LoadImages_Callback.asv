@@ -52,7 +52,7 @@ data_main.cont = cell(nImages, 1);
 data_main.hMenuItem.FreeHand.Enable = 'on';
 data_main.Images = imgWrite;
 
-data_main.gatedContour = gatedContour;
+data_main.gatedConour = gatedContour;
 data_main.trackContour = trackContour;
 
 %% initilization
@@ -71,9 +71,6 @@ data_main.hMenuItem.Snake.Enable = 'off';
 data_main.hSlider.snake.Visible = 'on';
 
 %% initial Tumor plot
-data_main.hMenuItem.Snake.Enable = 'off';
-data_main.hMenuItem.Tumor.bwSum.Enable = 'on';
-data_main.hMenuItem.Tumor.TrackContour.Enable = 'on';
 
 hPlotObj.Tumor.hgTrackContour = hggroup(hAxis.Tumor);
 hPlotObj.Tumor.hgPoints = hggroup(hAxis.Tumor);

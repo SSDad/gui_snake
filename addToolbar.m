@@ -8,4 +8,4 @@ uitoolfactory(hToolbar,'Exploration.ZoomIn');
 uitoolfactory(hToolbar,'Exploration.ZoomOut');
 uitoolfactory(hToolbar,'Exploration.Pan');                
 uitoolfactory(hToolbar,'Exploration.DataCursor');                
-uitoolfactory(hToolbar, 'Exploration.Rotate');
+% uitoolfactory(hToolbar, 'Exploration.Rotate');
