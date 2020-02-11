@@ -17,8 +17,13 @@ end
 
 if data_main.SnakeDone
     CB =   data_main.cont{sV};
-    data_main.hPlotObj.cont.XData = CB(:, 2);
-    data_main.hPlotObj.cont.YData = CB(:, 1);
+    if isempty(CB)
+        data_main.hPlotObj.cont.XData = [];
+        data_main.hPlotObj.cont.YData = [];
+    else
+        data_main.hPlotObj.cont.XData = CB(:, 2);
+        data_main.hPlotObj.cont.YData = CB(:, 1);
+    end
 end
 
 if data_main.AllPointDone

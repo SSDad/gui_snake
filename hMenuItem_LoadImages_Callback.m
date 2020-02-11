@@ -76,9 +76,12 @@ data_main.hMenuItem.Tumor.bwSum.Enable = 'on';
 data_main.hMenuItem.Tumor.TrackContour.Enable = 'on';
 
 hPlotObj.Tumor.hgTrackContour = hggroup(hAxis.Tumor);
+hPlotObj.Tumor.hgGatedContour = hggroup(hAxis.Tumor);
 hPlotObj.Tumor.hgPoints = hggroup(hAxis.Tumor);
 for n = 1:nImages
     hPlotObj.Tumor.TrackContour(n) = line(hPlotObj.Tumor.hgTrackContour, ...
+        'XData', [], 'YData', [],  'Color', 'b', 'LineStyle', '-', 'LineWidth', 1);
+    hPlotObj.Tumor.GatedContour(n) = line(hPlotObj.Tumor.hgGatedContour, ...
         'XData', [], 'YData', [],  'Color', 'g', 'LineStyle', '-', 'LineWidth', 1);
     hPlotObj.Tumor.Points(n) = line(hPlotObj.Tumor.hgPoints, 'XData', [], 'YData', [],  'Marker', '.',  'MarkerSize', 12, 'Color', 'r', 'LineStyle', 'none');
 end

@@ -19,15 +19,21 @@ if strcmp(data_main.hMenuItem.Tumor.bwSum.Checked, 'off')
         load(ffn)
     else
         [M, N, ~] = size(data_main.hPlotObj.snakeImage.CData);
-        cont = data_main.gatedContour;
-        [bwCAll, bwSum, polyA, CC] = fun_getCC(cont, M, N);
-        nImages = length(cont);
-        save(ffn, 'bwSum', 'polyA', 'CC', 'M', 'N', 'nImages');
+        contGC = data_main.gatedContour;
+        [bwCAll_GC, bwSum_GC, polyA_GC, CC_GC] = fun_getCC(contGC, M, N);
+        
+        contTC = data_main.trackContour;
+        [bwCAll_TC, bwSum_TC, polyA_TC, CC_TC] = fun_getCC(contTC, M, N);
+        
+        nImages = length(contGC);
+        save(ffn, 'bwSum_*', 'polyA_*', 'CC_*', 'M', 'N', 'nImages');
     end
 
     % Tumor plot
     hPlotObj.Tumor.bwSum.Visible = 'on';
+    bwSum = bwSum_GC+bwSum_TC;
     hPlotObj.Tumor.bwSum.CData = bwSum;
+    hAxis.Tumor.CLim = [min(bwSum(:)) max(bwSum(:))];
     linkaxes([hAxis.snake, hAxis.Tumor])
 else
     data_main.hMenuItem.Tumor.bwSum.Checked = 'off';

@@ -36,6 +36,7 @@ data_main.AllPointDone = true;
 data_main.hSlider.snake.Visible = 'on';
 data_main.hMenuItem.SavePoints.Enable = 'on';
 data_main.hMenuItem.Tumor.Points.Enable = 'on';
+data_main.hPushButton.DeleteSnake.Visible = 'on';
 
 %% save
 guidata(hFig_main, data_main);                

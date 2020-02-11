@@ -6,29 +6,35 @@ hAxis = data_main.hAxis;
 hPlotObj = data_main.hPlotObj;
 hSlider = data_main.hSlider;
 
-if 
+if strcmp(data_main.hMenuItem.Tumor.bwSum.Checked, 'off')
+    data_main.hMenuItem.Tumor.bwSum.Checked = 'on';
 
+    dataPath = data_main.dataPath;
+    matFile = data_main.matFile;
 
-dataPath = data_main.dataPath;
-matFile = data_main.matFile;
+    [~, fn1, ~] = fileparts(matFile);
+    ffn = fullfile(dataPath, [fn1, '_Tumor.mat']);
 
-[~, fn1, ~] = fileparts(matFile);
-ffn = fullfile(dataPath, [fn1, '_Tumor.mat']);
+    if exist(ffn, 'file')
+        load(ffn)
+    else
+        [M, N, ~] = size(data_main.hPlotObj.snakeImage.CData);
+        contGC = data_main.gatedContour;
+        [bwCAll_GC, bwSum_GC, polyA, CC] = fun_getCC(contGC, M, N);
+        
+        
+        nImages = length(contGC);
+        save(ffn, 'bwSum', 'polyA', 'CC', 'M', 'N', 'nImages');
+    end
 
-if exist(ffn, 'file')
-    load(ffn)
+    % Tumor plot
+    hPlotObj.Tumor.bwSum.Visible = 'on';
+    hPlotObj.Tumor.bwSum.CData = bwSum;
+    linkaxes([hAxis.snake, hAxis.Tumor])
 else
-    [M, N, ~] = size(data_main.hPlotObj.snakeImage.CData);
-    cont = data_main.gatedContour;
-    [bwCAll, bwSum, polyA, CC] = fun_getCC(cont, M, N);
-    nImages = length(cont);
-    save(ffn, 'bwSum', 'polyA', 'CC', 'M', 'N', 'nImages');
+    data_main.hMenuItem.Tumor.bwSum.Checked = 'off';
+    hPlotObj.Tumor.bwSum.Visible = 'off';
 end
-
-% Tumor plot
-
-hPlotObj.Tumor.bwSum.CData = bwSum;
-linkaxes([hAxis.snake, hAxis.Tumor])
 
 %% save
 % guidata(hFig_main, data_main);                

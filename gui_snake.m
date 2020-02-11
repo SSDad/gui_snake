@@ -21,13 +21,14 @@ data_main.hMenu = hMenu;
 data_main.hMenuItem = hMenuItem;
 
 %% panel, table
-[hPanel, hAxis, hPlotObj, hSlider, hText, hToggleButton] = addPanel(hFig_main);
+[hPanel, hAxis, hPlotObj, hSlider, hText, hToggleButton, hPushButton] = addPanel(hFig_main);
 data_main.hPanel = hPanel;
 data_main.hSlider = hSlider;
 data_main.hAxis = hAxis;
 data_main.hPlotObj = hPlotObj;
 data_main.hText = hText;
 data_main.hToggleButton = hToggleButton;
+data_main.hPushButton = hPushButton;
 
 data_main.FreeHandDone = false;
 data_main.SnakeDone = false;
