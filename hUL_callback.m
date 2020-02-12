@@ -28,5 +28,9 @@ function hUL_callback(src, evnt)
         if strcmp(data_main.hMenuItem.Tumor.Points.Checked, 'on')
             updateTumorPoints(data_main);
         end
+        
+        if strcmp(data_main.hMenuItem.Tumor.Profile.Checked, 'on')
+            updateTumorProfile(data_main);
+        end
     end
     

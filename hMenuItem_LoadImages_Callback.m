@@ -68,8 +68,11 @@ data_main.hPlotObj.cont.YData = [];
 data_main.hPlotObj.Point.XData = [];
 data_main.hPlotObj.Point.YData = [];
 
-data_main.hMenuItem.Snake.Enable = 'off';
+% data_main.hMenuItem.Snake.Enable = 'off';
+data_main.hText.nImages.Visible = 'on';
 data_main.hSlider.snake.Visible = 'on';
+
+data_main.hMenuItem.Tumor.Profile.Enable = 'on';
 
 %% initial Tumor plot
 data_main.hMenuItem.Snake.Enable = 'off';
