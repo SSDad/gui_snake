@@ -2,6 +2,8 @@ function initSnakePanel(hFig_main)
 
 data_main = guidata(hFig_main);
 hPanel = data_main.hPanel;
+hAxis = data_main.hAxis;
+hPlotObj = data_main.hPlotObj;
 Images = data_main.Images;
 
 hAxis.snake = axes('Parent',                   hPanel.snake, ...

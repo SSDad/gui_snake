@@ -2,6 +2,8 @@ function initSnakePanel(hFig_main)
 
 data_main = guidata(hFig_main);
 hPanel = data_main.hPanel;
+hAxis = data_main.hAxis;
+hPlotObj = data_main.hPlo
 Images = data_main.Images;
 
 hAxis.snake = axes('Parent',                   hPanel.snake, ...
@@ -27,6 +29,8 @@ xWL(2) = xWL(1)+dx*N;
 yWL(1) = y0-dy/2;
 yWL(2) = yWL(1)+dy*M;
 RA = imref2d([M N], xWL, yWL);
+
+data_main.RA = RA;
 
 hPlotObj.snakeImage = imshow(I, RA, 'parent', hAxis.snake);
     

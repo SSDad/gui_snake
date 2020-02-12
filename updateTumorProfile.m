@@ -7,10 +7,14 @@ hPL = hPlotObj.Profile.PL;
 bwSum = hPlotObj.Tumor.bwSum.CData;
 pos = hPL.Position; 
 
-prof = improfile(bwSum, pos(:, 1), pos(:, 2));
+xL = data_main.RA.XWorldLimits;
+yL = data_main.RA.YWorldLimits;
+[xProf, yProf, prof] = improfile(xL, yL, bwSum, pos(:, 1), pos(:, 2));
+
+rr = ((xProf-xProf(1)).^2+(yProf-yProf(1)).^2).^0.5;
 
 % line
-hPlotObj.Profile.Profile.XData = 1:length(prof);
+hPlotObj.Profile.Profile.XData = rr;
 hPlotObj.Profile.Profile.YData = prof;
 
 % patches
@@ -22,10 +26,10 @@ if prof(1) == 0
 else
     xL1 = 1;
 end
-hPlotObj.Profile.Patch1.XData = [xL1 xL2 xL2 xL1];
+hPlotObj.Profile.Patch1.XData = [rr(xL1) rr(xL2) rr(xL2) rr(xL1)];
 hPlotObj.Profile.Patch1.YData = [0 0 maxV maxV];
-hPlotObj.Profile.Text1.Position = [xL1+2 maxV 0];
-hPlotObj.Profile.Text1.String = num2str(xL2-xL1);
+hPlotObj.Profile.Text1.Position = [rr(xL1)+2*data_main.dx maxV 0];
+hPlotObj.Profile.Text1.String = num2str(rr(xL2)-rr(xL1), '%4.1f');
 
 xR1 = find(prof == maxV, 1, 'last');
 if prof(end) == 0
@@ -34,7 +38,8 @@ if prof(end) == 0
 else
     xR2 = length(prof);
 end
-hPlotObj.Profile.Patch2.XData = [xR1 xR2 xR2 xR1];
+
+hPlotObj.Profile.Patch2.XData = [rr(xR1) rr(xR2) rr(xR2) rr(xR1)];
 hPlotObj.Profile.Patch2.YData = [0 0 maxV maxV];
-hPlotObj.Profile.Text2.Position = [xR2-4 maxV 0];
-hPlotObj.Profile.Text2.String = num2str(xR2-xR1);
+hPlotObj.Profile.Text2.Position = [rr(xR2)-4*data_main.dx maxV 0];
+hPlotObj.Profile.Text2.String = num2str(rr(xR2)-rr(xR1), '%4.1f');

@@ -24,6 +24,11 @@ hPlotObj.Tumor.bwSum = imshow(bwSum, data_main.RA, 'parent', hAxis.Tumor);
 hAxis.Tumor.CLim = [min(bwSum(:)) max(bwSum(:))];
 linkaxes([hAxis.snake hAxis.Tumor]);
 
+data_main.Tumor.mask_GC = mask_GC;
+data_main.Tumor.mask_TC = mask_TC;
+data_main.Tumor.CC_GC = CC_GC;
+data_main.Tumor.CC_TC = CC_TC;
+
 data_main.hMenuItem.Tumor.bwSum.Checked = 'on';
 
 % contour
@@ -31,13 +36,18 @@ hPlotObj.Tumor.hgTrackContour = hggroup(hAxis.Tumor);
 hPlotObj.Tumor.hgGatedContour = hggroup(hAxis.Tumor);
 hPlotObj.Tumor.hgPoints = hggroup(hAxis.Tumor);
 for n = 1:data_main.nImages
+    hPlotObj.Tumor.TrackContour(n) = line(hPlotObj.Tumor.hgTrackContour, ...
+        'XData',  [], 'YData',  [],  'Color', 'b', 'LineStyle', '-', 'LineWidth', 1);
     if ~isempty(CC_TC{n})
-        hPlotObj.Tumor.TrackContour(n) = line(hPlotObj.Tumor.hgTrackContour, ...
-        'XData',  CC_TC{n}(:, 2), 'YData',  CC_TC{n}(:, 1),  'Color', 'b', 'LineStyle', '-', 'LineWidth', 1);
+        hPlotObj.Tumor.TrackContour(n).XData = CC_TC{n}(:, 2);
+        hPlotObj.Tumor.TrackContour(n).YData = CC_TC{n}(:, 1);
     end
+    
+    hPlotObj.Tumor.GatedContour(n) = line(hPlotObj.Tumor.hgGatedContour, ...
+        'XData', [], 'YData', [],  'Color', 'g', 'LineStyle', '-', 'LineWidth', 1);
     if ~isempty(CC_GC{n})
-        hPlotObj.Tumor.GatedContour(n) = line(hPlotObj.Tumor.hgGatedContour, ...
-        'XData', CC_GC{n}(:, 2), 'YData', CC_GC{n}(:, 1),  'Color', 'g', 'LineStyle', '-', 'LineWidth', 1);
+        hPlotObj.Tumor.GatedContour(n).XData = CC_GC{n}(:, 2);
+        hPlotObj.Tumor.GatedContour(n).YData = CC_GC{n}(:, 1);
     end
     
     hPlotObj.Tumor.Points(n) = line(hPlotObj.Tumor.hgPoints, 'XData', [], 'YData', [],  'Marker', '.',  'MarkerSize', 12, 'Color', 'r', 'LineStyle', 'none');
