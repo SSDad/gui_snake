@@ -89,5 +89,12 @@ end
 
 data_main.hPlotObj = hPlotObj;
 
+data_main.Tumor.indSS = 1:nImages;
+
 %% save
-guidata(hFig_main, data_main);                
+guidata(hFig_main, data_main);          
+
+initTumorOverlay(hFig_main);
+initTrackContour(hFig_main);
+
+      

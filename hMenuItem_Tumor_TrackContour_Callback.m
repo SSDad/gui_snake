@@ -10,12 +10,10 @@ hSlider = data_main.hSlider;
 if strcmp(data_main.hMenuItem.Tumor.TrackContour.Checked, 'off')
     data_main.hMenuItem.Tumor.TrackContour.Checked = 'on';
     updateTrackContour(data_main);
-    linkaxes([hAxis.snake, hAxis.Tumor])
+    hPlotObj.Tumor.hgTrackContour.Visible = 'on';
+    hPlotObj.Tumor.hgGatedContour.Visible = 'on';
 else
     data_main.hMenuItem.Tumor.TrackContour.Checked = 'off';
     hPlotObj.Tumor.hgTrackContour.Visible = 'off';
     hPlotObj.Tumor.hgGatedContour.Visible = 'off';
 end    
-    
-%% save
-% guidata(hFig_main, data_main);                

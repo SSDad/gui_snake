@@ -41,5 +41,35 @@ data_main.hMenuItem.Tumor.Points.Enable = 'on';
 data_main.hPushButton.DeleteSnake.Visible = 'on';
 data_main.hMenuItem.DeletePoint.Checked = 'on';
 
+updateTumorPoints(data_main);
+
+data_main.hMenuItem.Tumor.Points.Checked = 'on';
+
+%% initialize horizontal 2 lines on PointsPlot
+% [x1 y1
+%  x2 y2]
+Lim(1,1) = 1;
+Lim(2,1) = size(allP,1);
+Lim(1,2) = min(allP(:, 2));
+Lim(2,2) = max(allP(:, 2));
+
+hA = data_main.hAxis.PlotPoint;
+
+pos = Lim;
+pos(1, 2) = pos(2, 2);
+hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    'Position', pos , 'Tag', 'UL');
+
+pos = Lim;
+pos(2, 2) = pos(1, 2);
+hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    'Color', 'c', 'Position', pos , 'Tag', 'LL');
+
+addlistener(hUL, 'MovingROI', @hUL_callback);
+addlistener(hLL, 'MovingROI', @hUL_callback);
+
+data_main.LinePos.y1 = Lim(1, 2);
+data_main.LinePos.y2 = Lim(2, 2);
+
 %% save
 guidata(hFig_main, data_main);                

@@ -8,11 +8,8 @@ hPlotObj = data_main.hPlotObj;
 if strcmp(data_main.hMenuItem.Tumor.bwSum.Checked, 'off')
     data_main.hMenuItem.Tumor.bwSum.Checked = 'on';
     updateTumorOverlay(data_main);
-    linkaxes([hAxis.snake, hAxis.Tumor])
+    hPlotObj.Tumor.bwSum.Visible = 'on';
 else
     data_main.hMenuItem.Tumor.bwSum.Checked = 'off';
     hPlotObj.Tumor.bwSum.Visible = 'off';
 end
-
-%% save
-% guidata(hFig_main, data_main);                

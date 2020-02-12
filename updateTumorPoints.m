@@ -3,10 +3,10 @@ function updateTumorPoints(data_main)
 hAxis = data_main.hAxis;
 hPlotObj = data_main.hPlotObj;
 
-hPlotObj.Tumor.hgPoints.Visible = 'on';
+% hPlotObj.Tumor.hgPoints.Visible = 'on';
 
 allP = data_main.Point.AllPoint;
-indSS = data_main.indSS;
+indSS = data_main.Tumor.indSS;
 
 for n = 1:data_main.nImages
     hPlotObj.Tumor.Points(n).XData = [];

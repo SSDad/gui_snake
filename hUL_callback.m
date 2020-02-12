@@ -14,11 +14,19 @@ function hUL_callback(src, evnt)
     end        
         
     if y2>y1
-        data_main.indSS = find(allP(:, 2) >= y1 & allP(:, 2) <= y2);
+        data_main.Tumor.indSS = find(allP(:, 2) >= y1 & allP(:, 2) <= y2);
         guidata(hFig_main, data_main);
-    
-        updateTrackContour(data_main);
-        updateTumorOverlay(data_main);
-        updateTumorPoints(data_main);
+
+        if strcmp(data_main.hMenuItem.Tumor.bwSum.Checked, 'on')
+            updateTumorOverlay(data_main);
+        end
+        
+        if strcmp(data_main.hMenuItem.Tumor.TrackContour.Checked, 'on')
+            updateTrackContour(data_main);
+        end
+        
+        if strcmp(data_main.hMenuItem.Tumor.Points.Checked, 'on')
+            updateTumorPoints(data_main);
+        end
     end
     

@@ -9,6 +9,7 @@ hPlotObj = data_main.hPlotObj;
 if strcmp(data_main.hMenuItem.Tumor.Points.Checked, 'off')
     data_main.hMenuItem.Tumor.Points.Checked = 'on';
     updateTumorPoints(data_main);
+    hPlotObj.Tumor.hgPoints.Visible = 'on';
 else
     data_main.hMenuItem.Tumor.Points.Checked = 'off';
     hPlotObj.Tumor.hgPoints.Visible = 'off';
