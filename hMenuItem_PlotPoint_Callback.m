@@ -22,6 +22,8 @@ for n = 1:data_main.nImages
     allP(n, :) = [x yy(ip)];
 end
 
+data_main.hAxis.PlotPoint.XLim = [1 data_main.nImages];
+
 data_main.Point.AllPoint = allP;
 hPlotObj.PlotPoint.All.XData = 1:data_main.nImages;
 hPlotObj.PlotPoint.All.YData = allP(:,2);
@@ -37,6 +39,7 @@ data_main.hSlider.snake.Visible = 'on';
 data_main.hMenuItem.SavePoints.Enable = 'on';
 data_main.hMenuItem.Tumor.Points.Enable = 'on';
 data_main.hPushButton.DeleteSnake.Visible = 'on';
+data_main.hMenuItem.DeletePoint.Checked = 'on';
 
 %% save
 guidata(hFig_main, data_main);                

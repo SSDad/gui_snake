@@ -39,6 +39,7 @@ hPlotObj.snakeImage.CData = I;
 
 data_main.hText.nImages.String = [num2str(sV), ' / ', num2str(nImages)];
 data_main.nImages = nImages;
+data_main.indSS = 1:nImages;
 
 % slider
 hSlider.snake.Min = 1;

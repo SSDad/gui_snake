@@ -1,7 +1,8 @@
-function [bwCAll, bwSum, polyA, CC] = fun_getCC(cont, M, N)
+function [bwCAll, mask, bwSum, polyA, CC] = fun_getCC(cont, M, N)
 
 nC = length(cont);
 bwCAll = cell(nC, 1);
+mask = false(M, N, nC);
 bwSum = zeros(M, N);
 CC = cell(nC, 1);
 polyA = zeros(nC, 2);
@@ -27,7 +28,7 @@ for iC = 1:nC
         polyA(iC, 2) = length(B);
         CC{iC} = B{idx};
 
-        bwA = poly2mask(CC{iC}(:, 2), CC{iC}(:, 1), M, N);
-        bwSum = bwSum+bwA;
+        mask(:,:,iC) = poly2mask(CC{iC}(:, 2), CC{iC}(:, 1), M, N);
+        bwSum = bwSum+mask(:,:,iC);
     end
 end
