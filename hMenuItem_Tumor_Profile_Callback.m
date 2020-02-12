@@ -44,9 +44,6 @@ addlistener(hPL, 'MovingROI', @hPL_callback);
 hPlotObj.Profile.PL = hPL;
 
 %% initilize profile plot
-hPlotObj.Profile.Profile = line(hAxis.Profile, 'XData', [], 'YData', [],...
-    'Marker', '.',  'MarkerSize', 12,...
-    'Color', 'c', 'LineStyle', '-');
 data_main.hPlotObj = hPlotObj;
 guidata(hFig_main, data_main);
 

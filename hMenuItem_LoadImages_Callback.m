@@ -37,6 +37,8 @@ I = rot90(imgWrite{sV}, 3);
 
 hPlotObj.snakeImage.CData = I;
 
+data_main.dxy = 3.5;
+
 data_main.hText.nImages.String = [num2str(sV), ' / ', num2str(nImages)];
 data_main.nImages = nImages;
 data_main.indSS = 1:nImages;
@@ -99,5 +101,3 @@ guidata(hFig_main, data_main);
 
 initTumorOverlay(hFig_main);
 initTrackContour(hFig_main);
-
-      
