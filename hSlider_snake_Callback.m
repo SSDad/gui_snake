@@ -3,6 +3,11 @@ function hSlider_snake_Callback(src, evnt)
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
 
+x0 = data_main.x0;
+y0 = data_main.y0;
+dx = data_main.dx;
+dy = data_main.dy;
+
 sV = round(get(src, 'Value'));
 
 hPlotObj = data_main.hPlotObj;
@@ -21,8 +26,8 @@ if data_main.SnakeDone
         data_main.hPlotObj.cont.XData = [];
         data_main.hPlotObj.cont.YData = [];
     else
-        data_main.hPlotObj.cont.XData = CB(:, 2);
-        data_main.hPlotObj.cont.YData = CB(:, 1);
+        data_main.hPlotObj.cont.XData = (CB(:, 2)-1)*dy+y0;
+        data_main.hPlotObj.cont.YData = (CB(:, 1)-1)*dx+x0;
     end
 end
 

@@ -3,6 +3,11 @@ function hToggleButton_Manual_Callback(src, evnt)
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
 
+x0 = data_main.x0;
+y0 = data_main.y0;
+dx = data_main.dx;
+dy = data_main.dy;
+
 bV = src.Value;
 iSlice = round(data_main.hSlider.snake.Value);
 
@@ -33,6 +38,11 @@ else
     I = data_main.hPlotObj.snakeImage.CData;
     [M, N, ~] = size(I);
     C = L.Position;
+    
+    % convert to ij
+    C(:, 1) = (C(:, 1)-data_main.x0)/data_main.dx+1;
+    C(:, 2) = (C(:, 2)-data_main.y0)/data_main.dy+1;
+    
     mask = poly2mask(C(:,1), C(:,2), M, N);
 
     windowWidth = 45;
@@ -53,8 +63,8 @@ else
     data_main.cont{iSlice} = [sX sY];
     
     % show
-    data_main.hPlotObj.cont.XData = sY;
-    data_main.hPlotObj.cont.YData = sX;
+    data_main.hPlotObj.cont.XData = (sY-1)*dy+y0;
+    data_main.hPlotObj.cont.YData = (sX-1)*dx+x0;
     
     L.Visible = 'off';
 
