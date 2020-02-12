@@ -1,0 +1,60 @@
+function initSnakePanel(hFig_main)
+
+data_main = guidata(hFig_main);
+hPanel = data_main.hPanel;
+Images = data_main.Images;
+
+hAxis.snake = axes('Parent',                   hPanel.snake, ...
+                            'color',        'none',...
+                            'Units',                    'normalized', ...
+                            'HandleVisibility',     'callback', ...
+                            'Position',                 [0. 0. 1. 1.]);
+hold(hAxis.snake, 'on');
+
+% CT images
+sV = data_main.sliderValue;
+nImages = data_main.nImages;
+
+I = rot90(Images{sV}, 3);
+[M, N, ~] = size(I);
+
+x0 = data_main.x0;
+y0 = data_main.y0;
+dx = data_main.dx;
+dy = data_main.dy;
+xWL(1) = x0-dx/2;
+xWL(2) = xWL(1)+dx*N;
+yWL(1) = y0-dy/2;
+yWL(2) = yWL(1)+dy*M;
+RA = imref2d([M N], xWL, yWL);
+
+data_main.RA = RA;
+
+hPlotObj.snakeImage = imshow(I, RA, 'parent', hAxis.snake);
+    
+% contour
+hPlotObj.cont = line(hAxis.snake,...
+    'XData', [], 'YData', [], 'Color', 'c', 'LineStyle', '-', 'LineWidth', 1);
+
+% point on diaphragm
+hPlotObj.Point = line(hAxis.snake,...
+    'XData', [], 'YData', [], 'Color', 'r', 'LineStyle', 'none',...
+    'Marker', '.', 'MarkerSize', 8);
+
+% image number text
+data_main.hText.nImages.String = [num2str(sV), ' / ', num2str(nImages)];
+
+% slider
+hSlider = data_main.hSlider;
+hSlider.snake.Min = 1;
+hSlider.snake.Max = nImages;
+hSlider.snake.Value = sV;
+hSlider.snake.SliderStep = [1 10]/(nImages-1);
+
+data_main.hText.nImages.Visible = 'on';
+data_main.hSlider.snake.Visible = 'on';
+
+%% save data
+data_main.hAxis = hAxis;
+data_main.hPlotObj = hPlotObj;
+guidata(hFig_main, data_main);
