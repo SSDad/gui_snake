@@ -4,11 +4,21 @@ hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
 hPlotObj = data_main.hPlotObj;
 
+x0 = data_main.x0;
+y0 = data_main.y0;
+dx = data_main.dx;
+dy = data_main.dy;
+
 I = data_main.hPlotObj.snakeImage.CData;
 x = data_main.Point.x;
 
 for n = 1:data_main.nImages
     C = data_main.cont{n};
+
+    % convert to xy
+    C(:, 1) = (C(:, 1)-1)*dx+x0;
+    C(:, 2) = (C(:, 2)-1)*dy+y0;
+
     xx = C(:, 2);
     yy = C(:, 1);
 
@@ -28,7 +38,7 @@ data_main.Point.AllPoint = allP;
 hPlotObj.PlotPoint.All.XData = 1:data_main.nImages;
 hPlotObj.PlotPoint.All.YData = allP(:,2);
 hPlotObj.PlotPoint.All.MarkerSize = 16;
-hPlotObj.PlotPoint.All.Color = 'g';
+hPlotObj.PlotPoint.All.Color = 'c';
 
 hPlotObj.PlotPoint.Current.XData = data_main.Point.iSlice;
 hPlotObj.PlotPoint.Current.YData = allP(data_main.Point.iSlice, 2);
@@ -63,7 +73,7 @@ hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
 pos = Lim;
 pos(2, 2) = pos(1, 2);
 hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
-    'Color', 'c', 'Position', pos , 'Tag', 'LL');
+    'Color', 'g', 'Position', pos , 'Tag', 'LL');
 
 addlistener(hUL, 'MovingROI', @hUL_callback);
 addlistener(hLL, 'MovingROI', @hUL_callback);

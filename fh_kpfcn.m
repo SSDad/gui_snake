@@ -1,9 +1,20 @@
 function [] = fh_kpfcn(H, E)          
 
 data_main = guidata(H);
+
+x0 = data_main.x0;
+y0 = data_main.y0;
+dx = data_main.dx;
+dy = data_main.dy;
+
 idx = data_main.Point.idx;
 iSlice = data_main.Point.iSlice;
 C = data_main.cont{iSlice};
+
+% convert to xy
+C(:, 1) = (C(:, 1)-1)*dx+x0;
+C(:, 2) = (C(:, 2)-1)*dy+y0;
+
 xx = C(:, 1);
 yy = C(:, 2);
 direction = data_main.Point.direction;

@@ -125,10 +125,10 @@ hPlotObj.Profile.Profile = line(hAxis.Profile, 'XData', [], 'YData', [],...
     'Color', 'c', 'LineStyle', '-');
 
 hPlotObj.Profile.Patch1 = patch(hAxis.Profile, 'XData', [], 'YData', [],...
-    'FaceColor', 'c', 'FaceAlpha', 0.25, 'EdgeColor', 'none');
+    'FaceColor', 'g', 'FaceAlpha', 0.2, 'EdgeColor', 'none');
 hPlotObj.Profile.Text1 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
 
 hPlotObj.Profile.Patch2 = patch(hAxis.Profile, 'XData', [], 'YData', [],...
-    'FaceColor', 'c', 'FaceAlpha', 0.25, 'EdgeColor', 'none');
+    'FaceColor', 'g', 'FaceAlpha', 0.2, 'EdgeColor', 'none');
 hPlotObj.Profile.Text2 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
 

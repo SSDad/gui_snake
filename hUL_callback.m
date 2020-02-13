@@ -17,9 +17,9 @@ function hUL_callback(src, evnt)
         data_main.Tumor.indSS = find(allP(:, 2) >= y1 & allP(:, 2) <= y2);
         guidata(hFig_main, data_main);
 
-        if strcmp(data_main.hMenuItem.Tumor.bwSum.Checked, 'on')
+%         if strcmp(data_main.hMenuItem.Tumor.bwSum.Checked, 'on')
             updateTumorOverlay(data_main);
-        end
+%         end
         
         if strcmp(data_main.hMenuItem.Tumor.TrackContour.Checked, 'on')
             updateTrackContour(data_main);
