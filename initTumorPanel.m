@@ -21,7 +21,9 @@ hold(hAxis.Tumor, 'on')
 [mask_GC, mask_TC, CC_GC, CC_TC] = getTumorContour(hFig_main);
 bwSum = sum(mask_GC, 3)+sum(mask_TC, 3);
 hPlotObj.Tumor.bwSum = imshow(bwSum, data_main.RA, 'parent', hAxis.Tumor);
-hAxis.Tumor.CLim = [min(bwSum(:)) max(bwSum(:))];
+if any(bwSum(:))
+    hAxis.Tumor.CLim = [min(bwSum(:)) max(bwSum(:))];
+end
 linkaxes([hAxis.snake hAxis.Tumor]);
 
 data_main.Tumor.mask_GC = mask_GC;

@@ -1,4 +1,4 @@
-function hMenuItem_Point_Callback(src, evnt)
+function hMenuItem_PointPreProcess_Callback(src, evnt)
 
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
@@ -9,12 +9,23 @@ y0 = data_main.y0;
 dx = data_main.dx;
 dy = data_main.dy;
 
+xmin = 0;
+xmax = inf;
+for iSlice = 1:data_main.nImages
+    C = data_main.cont{iSlice};
+    xx = (C(:, 1)-1)*dx+x0;
+    xmin = max(min(xx), xmin);
+    xmax = min(max(xx), xmax);
+    
+    C(:, 2) = (C(:, 2)-1)*dy+y0;
+    yMean(iSlice) = mean(yy);
+end
+    
+
+
 iSlice = round(data_main.hSlider.snake.Value);
-C = data_main.cont{iSlice};
 
 % convert to xy
-C(:, 1) = (C(:, 1)-1)*dx+x0;
-C(:, 2) = (C(:, 2)-1)*dy+y0;
 
 % number of neighbour points
 strNP =  data_main.hPopup.Neighbour.String;

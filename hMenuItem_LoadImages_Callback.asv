@@ -6,8 +6,6 @@ hPanel = data_main.hPanel;
 hAxis = data_main.hAxis;
 hSlider = data_main.hSlider;
 
-hWB = waitbar(0, 'Loading data...');
-
 %% load data
 td = tempdir;
 fd_info = fullfile(td, 'TaehoTracking');
@@ -25,6 +23,8 @@ else
         [matFile, ~] = uigetfile([dataPath, '*.mat']);
     end
 end
+
+hWB = waitbar(0, 'Loading data...');
 
 data_main.dataPath = dataPath;
 data_main.matFile = matFile;
@@ -45,10 +45,11 @@ sV = round(nImages/2);
 sV = 1;
 data_main.sliderValue = sV;
 
+
 data_main.gatedContour = gatedContour;
 data_main.trackContour = trackContour;
 
-waitbar(1/3, hW, 'Initializing GUI...');
+waitbar(1/3, hWB, 'Initializing GUI...');
 %% initialize snake panel
 guidata(hFig_main, data_main);
 initSnakePanel(hFig_main);
@@ -61,7 +62,7 @@ data_main.FreeHandDone = false;
 data_main.SnakeDone = false;
 data_main.AllPointDone = false;
 
-waitbar(2/3, hW, 'Initializing GUI...');
+waitbar(2/3, hWB, 'Initializing GUI...');
 %% initialize Tumor panel
 guidata(hFig_main, data_main);
 initTumorPanel(hFig_main)
@@ -78,12 +79,9 @@ data_main.hMenuItem.Snake.Enable = 'off';
 data_main.hMenuItem.Tumor.bwSum.Enable = 'on';
 data_main.hMenuItem.Tumor.TrackContour.Enable = 'on';
 
-
 %% save
 guidata(hFig_main, data_main);
-waitbar(1, hW, 'Bingo!');
 
-
-% 
-% initTumorOverlay(hFig_main);
-% initTrackContour(hFig_main);
+waitbar(1, hWB, 'Bingo!');
+pause(3);
+close(hWB);

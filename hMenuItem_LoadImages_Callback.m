@@ -45,6 +45,7 @@ sV = round(nImages/2);
 sV = 1;
 data_main.sliderValue = sV;
 
+
 data_main.gatedContour = gatedContour;
 data_main.trackContour = trackContour;
 

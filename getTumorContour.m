@@ -9,8 +9,8 @@ matFile = data_main.matFile;
 ffn = fullfile(dataPath, [fn1, '_Tumor.mat']);
 
 if exist(ffn, 'file')
-%     load(ffn)
-% else
+    load(ffn)
+else
     [M, N, ~] = size(data_main.hPlotObj.snakeImage.CData);
     contGC = data_main.gatedContour;
     [bwCAll_GC, mask_GC, bwSum_GC, polyA_GC, CC_GC] = fun_getCC(contGC, M, N);

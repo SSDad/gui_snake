@@ -12,33 +12,47 @@ dy = data_main.dy;
 iSlice = round(data_main.hSlider.snake.Value);
 C = data_main.cont{iSlice};
 
-% convert to ij
-C(:, 1) = (C(:, 1)-data_main.x0)/data_main.dx+1;
-C(:, 2) = (C(:, 2)-data_main.y0)/data_main.dy+1;
+% convert to xy
+C(:, 1) = (C(:, 1)-1)*dx+x0;
+C(:, 2) = (C(:, 2)-1)*dy+y0;
+
+% number of neighbour points
+strNP =  data_main.hPopup.Neighbour.String;
+idxNP = data_main.hPopup.Neighbour.Value;
+NP = str2num(strNP{idxNP});
+
+[xm, ym, xL, yL, xR, yR] = fun_findPointsOnDiaphragm(C, NP, dat);
+
+% show on gui
+data_main.hPlotObj.Point.XData = xm;
+data_main.hPlotObj.Point.YData = ym;
+data_main.hPlotObj.LeftPoints.XData = xL;
+data_main.hPlotObj.LeftPoints.YData = yL;
+data_main.hPlotObj.RightPoints.XData = xR;
+data_main.hPlotObj.RightPoints.YData = yR;
+    
+
+% % point x - mean over all contour x
+% x = mean(C(:, 2));
+% xx = C(:, 2);
+% yy = C(:, 1);
+% 
+% [~, ind] = sort(abs(xx - x));
+% px4 = xx(ind(1:4));
+% py4 = yy(ind(1:4));
+% 
+% [~, idx] = max(py4);
+% 
+% ip = ind(idx); % point index
+% 
+% % update points 
+% data_main.hPlotObj.Point.XData = xx(ip);
+% data_main.hPlotObj.Point.YData = yy(ip);
+% 
+% 
+% [xLP, yLP, xRP, yRP] = fun_findNeighbourPoints(xx, yy, ip, NP);
 
 
-
-I = data_main.hPlotObj.snakeImage.CData;
-[M, N, ~] = size(I);
-
-x = mean(C(:, 2));
-xx = C(:, 2);
-yy = C(:, 1);
-
-[~, ind] = sort(abs(xx - x));
-px4 = xx(ind(1:4));
-py4 = yy(ind(1:4));
-
-[~, idx] = max(py4);
-
-data_main.hPlotObj.Point.XData = px4(idx);
-data_main.hPlotObj.Point.YData = py4(idx);
-
-data_main.hPlotObj.Point.Color = 'g';
-data_main.hPlotObj.Point.Marker = '.';
-data_main.hPlotObj.Point.MarkerSize = 24;
-
-ip = ind(idx);
 % find x increase
 xn = circshift(xx, -ip+1);
 if xn(10) > x(1)
@@ -47,12 +61,18 @@ else
     direction = -1;
 end
 
+
+
+
 data_main.Point.idx = ip;
 data_main.Point.direction = direction;
 data_main.Point.iSlice = iSlice;
 
 data_main.hToggleButton.Manual.Visible = 'off';
 data_main.hSlider.snake.Visible = 'off';
+
+data_main.hText.Neighbour.Visible = 'on';
+data_main.hPopup.Neighbour.Visible = 'on';
 
 % set(hFig_main, 'CurrentAxes', data_main.hAxis.snake)
 % figure(hFig_main);
