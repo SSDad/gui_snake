@@ -1,67 +1,46 @@
 function [] = fh_kpfcn(H, E)          
 
 data_main = guidata(H);
-xm = data_main.Point.xm;
+hPlotObj = data_main.hPlotObj;
+
+ixm = data_main.Point.ixm;
+xi = data_main.Point.xi;
+yi = data_main.Point.yi;
 NP = data_main.Point.NP;
-yMean = data_main.Point.yMean;
-xxn = data_main.Point.xxn;
-yyn = data_main.Point.yyn;
-dx = data_main.dx;
-
-% x0 = data_main.x0;
-% y0 = data_main.y0;
-% dx = data_main.dx;
-% dy = data_main.dy;
-% 
-% % idx = data_main.Point.idx;
-% iSlice = data_main.Point.iSlice;
-% C = data_main.cont{iSlice};
-% 
-% % convert to xy
-% C(:, 1) = (C(:, 1)-1)*dx+x0;
-% C(:, 2) = (C(:, 2)-1)*dy+y0;
-% 
-% xx = C(:, 1);
-% yy = C(:, 2);
-
-% direction = data_main.Point.direction;
-% nidx = idx;
 
 switch E.Key
     case 'rightarrow'
-        xm = xm+1;
+        ixm = ixm+1;
     case 'leftarrow'
-        xm = xm-1;
-    case 'return'
-        data_main.hPlotObj.Point.Color = 'r';
-        set(H, 'keypressfcn', '');
+        ixm = ixm-1;
+%     case 'return'
+%         hPlotObj.Point.Color = 'r';
+%         set(H, 'keypressfcn', '');
     otherwise  
 end
 
-data_main.Point.xm = xm;
-
 % update
-x1 = [xm xm];
-y1 = [yMean+10 1e4];
 
-[xm, ym] = polyxpoly(x1, y1, xxn, yyn);
+% on image
+iSlice = round(data_main.hSlider.snake.Value);
+hPlotObj.Point.XData = xi(ixm);
+hPlotObj.Point.YData = yi(iSlice, ixm);
 
-xL = xm-(1:NP)*dx;
-xR = xm+(1:NP)*dx;
-for n = 1:NP
-    x1 = [xL(n) xL(n)];
-    [~, yL(n)] = polyxpoly(x1, y1, xxn, yyn);
+hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
 
-    x1 = [xR(n) xR(n)];
-    [~, yR(n)] = polyxpoly(x1, y1, xxn, yyn);
-end
+% on point plot
+yy = mean(yi(:, ixm-NP:ixm+NP), 2);
+hPlotObj.PlotPoint.All.YData = yy;
+hPlotObj.PlotPoint.Current.XData = iSlice;
+hPlotObj.PlotPoint.Current.YData = yy(iSlice);
 
-% show on gui
-data_main.hPlotObj.Point.XData = xm;
-data_main.hPlotObj.Point.YData = ym;
-data_main.hPlotObj.LeftPoints.XData = xL;
-data_main.hPlotObj.LeftPoints.YData = yL;
-data_main.hPlotObj.RightPoints.XData = xR;
-data_main.hPlotObj.RightPoints.YData = yR;
+data_main.Point.ixm = ixm;
+
+% on tumor points
+updateTumorPoints(data_main)
+
 
 guidata(H, data_main);

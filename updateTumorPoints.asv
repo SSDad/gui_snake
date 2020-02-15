@@ -3,13 +3,9 @@ function updateTumorPoints(data_main)
 hAxis = data_main.hAxis;
 hPlotObj = data_main.hPlotObj;
 
-ixm = data_main.Point.ixm;
-xi = data_main.Point.xi;
-yi = data_main.Point.yi;
-NP = data_main.Point.NP;
+% hPlotObj.Tumor.hgPoints.Visible = 'on';
 
-yy = mean(yi(:, ixm-NP:ixm+NP), 2);
-
+ixm = data_main.Point.ix;
 indSS = data_main.Tumor.indSS;
 
 for n = 1:data_main.nImages
@@ -18,6 +14,6 @@ for n = 1:data_main.nImages
 end
 
 for n = 1:length(indSS)
-    hPlotObj.Tumor.Points(n).XData = xi(ixm);
-    hPlotObj.Tumor.Points(n).YData = yy(indSS(n));
+    hPlotObj.Tumor.Points(n).XData = allP(indSS(n), 1);
+    hPlotObj.Tumor.Points(n).YData = allP(indSS(n), 2);
 end

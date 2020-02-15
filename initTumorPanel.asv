@@ -52,8 +52,8 @@ for n = 1:data_main.nImages
         hPlotObj.Tumor.GatedContour(n).YData = CC_GC{n}(:, 1);
     end
     
-    hPlotObj.Tumor.Points(n) = line(hPlotObj.Tumor.hgPoints, 'XData', [], 'YData', [],...
-        'Marker', '.',  'MarkerSize', 12, 'Color', 'r', 'LineStyle', 'none');
+    hPlotObj.Tumor.Points(n) = line(hPlotObj.Tumor.hgPoints,...
+        'XData', [], 'YData', [],  'Marker', '.',  'MarkerSize', 12, 'Color', 'r', 'LineStyle', 'none');
 end
 % 
 % 

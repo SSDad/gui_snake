@@ -45,15 +45,15 @@ for n = 1:nImages
     waitbar(n/nImages, hWB);
     
     % smooth
-    sX = sgolayfilt(B{idx}(:, 1), polynomialOrder, windowWidth);
-    sY = sgolayfilt(B{idx}(:, 2), polynomialOrder, windowWidth);
+    sX = sgolayfilt(B{idx}(:, 2), polynomialOrder, windowWidth);
+    sY = sgolayfilt(B{idx}(:, 1), polynomialOrder, windowWidth);
     data_main.cont{n} = [sX sY];
     
     % show
     data_main.hSlider.snake.Value = n;
     hPlotObj.snakeImage.CData = rot90(data_main.Images{n}, 3);
-    hPlotObj.cont.XData = (sY-1)*dy+y0;
-    hPlotObj.cont.YData = (sX-1)*dx+x0;
+    hPlotObj.cont.YData = (sY-1)*dy+y0;
+    hPlotObj.cont.XData = (sX-1)*dx+x0;
     data_main.hText.nImages.String = [num2str(n), ' / ', num2str(data_main.nImages)];
 end
 close(hWB);
@@ -61,8 +61,8 @@ close(hWB);
 data_main.SnakeDone = true;
 
 CB =   data_main.cont{n};
-data_main.hPlotObj.cont.XData = (CB(:, 2)-1)*dy+y0;
-data_main.hPlotObj.cont.YData = (CB(:, 1)-1)*dx+x0;
+data_main.hPlotObj.cont.YData = (CB(:, 2)-1)*dy+y0;
+data_main.hPlotObj.cont.XData = (CB(:, 1)-1)*dx+x0;
 
 data_main.hToggleButton.Manual.Visible = 'on';
 data_main.hMenuItem.SaveSnakes.Enable = 'on';

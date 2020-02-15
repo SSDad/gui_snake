@@ -9,77 +9,45 @@ y0 = data_main.y0;
 dx = data_main.dx;
 dy = data_main.dy;
 
-iSlice = round(data_main.hSlider.snake.Value);
-C = data_main.cont{iSlice};
-
-% convert to xy
-C(:, 1) = (C(:, 1)-1)*dx+x0;
-C(:, 2) = (C(:, 2)-1)*dy+y0;
-
-% number of neighbour points
-strNP =  data_main.hPopup.Neighbour.String;
-idxNP = data_main.hPopup.Neighbour.Value;
-NP = str2num(strNP{idxNP});
-data_main.Point.NP = NP;
-
-[xm, ym, xL, yL, xR, yR, yMean, xxn, yyn] = fun_findPointsOnDiaphragm(C, NP, dx);
-data_main.Point.yMean = yMean;
-data_main.Point.xxn = xxn;
-data_main.Point.yyn = yyn;
+xi = data_main.Point.xi;
+yi = data_main.Point.yi;
+ixm = data_main.Point.ixm;
 
 % show on gui
-data_main.hPlotObj.Point.XData = xm;
-data_main.hPlotObj.Point.YData = ym;
-data_main.hPlotObj.LeftPoints.XData = xL;
-data_main.hPlotObj.LeftPoints.YData = yL;
-data_main.hPlotObj.RightPoints.XData = xR;
-data_main.hPlotObj.RightPoints.YData = yR;
-    
+iSlice = round(data_main.hSlider.snake.Value);
+data_main.hPlotObj.Point.XData = xi(ixm);
+data_main.hPlotObj.Point.YData = yi(iSlice, ixm);
 
-% % point x - mean over all contour x
-% x = mean(C(:, 2));
-% xx = C(:, 2);
-% yy = C(:, 1);
-% 
-% [~, ind] = sort(abs(xx - x));
-% px4 = xx(ind(1:4));
-% py4 = yy(ind(1:4));
-% 
-% [~, idx] = max(py4);
-% 
-% ip = ind(idx); % point index
-% 
-% % update points 
-% data_main.hPlotObj.Point.XData = xx(ip);
-% data_main.hPlotObj.Point.YData = yy(ip);
-% 
-% 
-% [xLP, yLP, xRP, yRP] = fun_findNeighbourPoints(xx, yy, ip, NP);
+str = data_main.hPopup.Neighbour.String;
+idx = data_main.hPopup.Neighbour.Value;
+NP = str2num(str{idx});
+data_main.Point.NP = NP;
+data_main.hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+data_main.hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+data_main.hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+data_main.hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
 
+% point plot
+xx = (1:data_main.nImages)';
+yy = mean(yi(:, ixm-NP:ixm+NP), 2);
+hPlotObj.PlotPoint.All.XData = xx;
+hPlotObj.PlotPoint.All.YData = yy;
+hPlotObj.PlotPoint.All.MarkerSize = 16;
+hPlotObj.PlotPoint.All.Color = 'c';
 
-% % find x increase
-% xn = circshift(xx, -ip+1);
-% if xn(10) > x(1)
-%     direction = 1;
-% else
-%     direction = -1;
-% end
+hPlotObj.PlotPoint.Current.XData =xx(iSlice);
+hPlotObj.PlotPoint.Current.YData = yy(iSlice);
+hPlotObj.PlotPoint.Current.MarkerSize = 24;
 
+% 2 line
 
-% data_main.Point.idx = ip;
-% data_main.Point.direction = direction;
-data_main.Point.iSlice = iSlice;
-
-data_main.Point.xm = xm;
+% tumor plot
+data_main.indSS = 1:data_main.nImages;
+updateTumorPoints(data_main)
+hPlotObj.Tumor.hgPoints.Visible = 'on';
 
 data_main.hToggleButton.Manual.Visible = 'off';
-data_main.hSlider.snake.Visible = 'off';
 
-data_main.hText.Neighbour.Visible = 'on';
-data_main.hPopup.Neighbour.Visible = 'on';
-
-% set(hFig_main, 'CurrentAxes', data_main.hAxis.snake)
-% figure(hFig_main);
 %% save
 guidata(hFig_main, data_main);                
 

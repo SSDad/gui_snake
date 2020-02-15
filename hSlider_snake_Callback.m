@@ -26,8 +26,8 @@ if data_main.SnakeDone
         data_main.hPlotObj.cont.XData = [];
         data_main.hPlotObj.cont.YData = [];
     else
-        data_main.hPlotObj.cont.XData = (CB(:, 2)-1)*dy+y0;
-        data_main.hPlotObj.cont.YData = (CB(:, 1)-1)*dx+x0;
+        data_main.hPlotObj.cont.YData = (CB(:, 2)-1)*dy+y0;
+        data_main.hPlotObj.cont.XData = (CB(:, 1)-1)*dx+x0;
     end
 end
 

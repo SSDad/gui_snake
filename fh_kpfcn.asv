@@ -1,44 +1,40 @@
 function [] = fh_kpfcn(H, E)          
 
 data_main = guidata(H);
-xm = data_main.xm;
-NP = data_main.NP;
 
-x0 = data_main.x0;
-y0 = data_main.y0;
-dx = data_main.dx;
-dy = data_main.dy;
-
-idx = data_main.Point.idx;
-iSlice = data_main.Point.iSlice;
-C = data_main.cont{iSlice};
-
-% convert to xy
-C(:, 1) = (C(:, 1)-1)*dx+x0;
-C(:, 2) = (C(:, 2)-1)*dy+y0;
-
-xx = C(:, 1);
-yy = C(:, 2);
-
-% direction = data_main.Point.direction;
-% nidx = idx;
+ixm = data_main.Point.ixm;
+xi = data_main.Point.xi;
+yi = data_main.Point.yi;
+NP = data_main.Point.NP;
 
 switch E.Key
     case 'rightarrow'
-        xm = xm+1;
+        ixm = ixm+1;
     case 'leftarrow'
-        xm = xm-1;
-    case 'return'
-        data_main.hPlotObj.Point.Color = 'r';
-        set(H, 'keypressfcn', '');
+        ixm = ixm-1;
+%     case 'return'
+%         data_main.hPlotObj.Point.Color = 'r';
+%         set(H, 'keypressfcn', '');
     otherwise  
 end
 
-data_main.xm = xm;
+xx = (1:data_main.nImages)';
+yy = mean(yi(:, ixm-NP:ixm+NP), 2);
 
-% update gui
+% on image
+data_main.hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+data_main.hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+data_main.hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+data_main.hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+
+% point plot
+hPlotObj.PlotPoint.All.XData = xx;
+hPlotObj.PlotPoint.All.YData = yy;
+
+
+% update
 x1 = [xm xm];
-y1 = [ym+10 1e4];
+y1 = [yMean+10 1e4];
 
 [xm, ym] = polyxpoly(x1, y1, xxn, yyn);
 
@@ -52,11 +48,12 @@ for n = 1:NP
     [~, yR(n)] = polyxpoly(x1, y1, xxn, yyn);
 end
 
-
-data_main.hPlotObj.Point.XData = x;
-data_main.hPlotObj.Point.YData = y;
-data_main.Point.idx = nidx;
-data_main.Point.x = x;
-data_main.Point.y = y;
+% show on gui
+data_main.hPlotObj.Point.XData = xm;
+data_main.hPlotObj.Point.YData = ym;
+data_main.hPlotObj.LeftPoints.XData = xL;
+data_main.hPlotObj.LeftPoints.YData = yL;
+data_main.hPlotObj.RightPoints.XData = xR;
+data_main.hPlotObj.RightPoints.YData = yR;
 
 guidata(H, data_main);

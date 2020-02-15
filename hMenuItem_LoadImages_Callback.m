@@ -39,12 +39,14 @@ data_main.y0 = 0;
 
 data_main.Images = imgWrite;
 nImages = length(imgWrite);
+[mI, nI, ~] = size(imgWrite{1});
+data_main.mI = mI;
+data_main.nI = nI;
 data_main.nImages = nImages;
 data_main.indSS = 1:nImages;
 sV = round(nImages/2);
 sV = 1;
 data_main.sliderValue = sV;
-
 
 data_main.gatedContour = gatedContour;
 data_main.trackContour = trackContour;

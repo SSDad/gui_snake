@@ -8,91 +8,46 @@ x0 = data_main.x0;
 y0 = data_main.y0;
 dx = data_main.dx;
 dy = data_main.dy;
+mI = data_main.mI;
+nI = data_main.nI;
+nImages = data_main.nImages;
 
-xmin = 0;
-xmax = inf;
-for iSlice = 1:data_main.nImages
+xi = x0:dx:x0+dx*(nI-1);
+yi = nan(nImages, nI);
+
+hWB = waitbar(0, 'Finding points on Diaphragm...');
+
+for iSlice = 1:nImages
     C = data_main.cont{iSlice};
     xx = (C(:, 1)-1)*dx+x0;
-    xmin = max(min(xx), xmin);
-    xmax = min(max(xx), xmax);
+    yy = (C(:, 2)-1)*dy+y0;
+    yMean = mean(yy);
+    ind = find(yy>yMean);
+    yyh = yy(ind);
+    xxh = xx(ind);
+
+    xm(iSlice) = mean(xxh);
     
-    C(:, 2) = (C(:, 2)-1)*dy+y0;
-    yMean(iSlice) = mean(yy);
+    for n = 1:nI
+        x1 = [xi(n) xi(n)];
+        y1 = [yMean+10 1e4];
+        [~, yc] = polyxpoly(x1, y1, xxh, yyh);
+        if length(yc)>1
+            yi(iSlice, n) = max(yc);
+        elseif length(yc)==1
+            yi(iSlice, n) = yc;
+        end
+    end
+    waitbar(iSlice/nImages, hWB, 'Finding points on Diaphragm...');
 end
-    
+waitbar(1, hWB, 'Bingo!');
+pause(2);
+close(hWB);
 
+[~, ixm] = min(abs(xi-mean(xm)));
+data_main.Point.xi = xi;
+data_main.Point.yi = yi;
+data_main.Point.ixm = ixm;
 
-iSlice = round(data_main.hSlider.snake.Value);
-
-% convert to xy
-
-% number of neighbour points
-strNP =  data_main.hPopup.Neighbour.String;
-idxNP = data_main.hPopup.Neighbour.Value;
-NP = str2num(strNP{idxNP});
-data_main.Point.NP = NP;
-
-[xm, ym, xL, yL, xR, yR, yMean, xxn, yyn] = fun_findPointsOnDiaphragm(C, NP, dx);
-data_main.Point.yMean = yMean;
-data_main.Point.xxn = xxn;
-data_main.Point.yyn = yyn;
-
-% show on gui
-data_main.hPlotObj.Point.XData = xm;
-data_main.hPlotObj.Point.YData = ym;
-data_main.hPlotObj.LeftPoints.XData = xL;
-data_main.hPlotObj.LeftPoints.YData = yL;
-data_main.hPlotObj.RightPoints.XData = xR;
-data_main.hPlotObj.RightPoints.YData = yR;
-    
-
-% % point x - mean over all contour x
-% x = mean(C(:, 2));
-% xx = C(:, 2);
-% yy = C(:, 1);
-% 
-% [~, ind] = sort(abs(xx - x));
-% px4 = xx(ind(1:4));
-% py4 = yy(ind(1:4));
-% 
-% [~, idx] = max(py4);
-% 
-% ip = ind(idx); % point index
-% 
-% % update points 
-% data_main.hPlotObj.Point.XData = xx(ip);
-% data_main.hPlotObj.Point.YData = yy(ip);
-% 
-% 
-% [xLP, yLP, xRP, yRP] = fun_findNeighbourPoints(xx, yy, ip, NP);
-
-
-% % find x increase
-% xn = circshift(xx, -ip+1);
-% if xn(10) > x(1)
-%     direction = 1;
-% else
-%     direction = -1;
-% end
-
-
-% data_main.Point.idx = ip;
-% data_main.Point.direction = direction;
-data_main.Point.iSlice = iSlice;
-
-data_main.Point.xm = xm;
-
-data_main.hToggleButton.Manual.Visible = 'off';
-data_main.hSlider.snake.Visible = 'off';
-
-data_main.hText.Neighbour.Visible = 'on';
-data_main.hPopup.Neighbour.Visible = 'on';
-
-% set(hFig_main, 'CurrentAxes', data_main.hAxis.snake)
-% figure(hFig_main);
 %% save
 guidata(hFig_main, data_main);                
-
-set(hFig_main, 'keypressfcn', @fh_kpfcn);
-
