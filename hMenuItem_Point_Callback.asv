@@ -39,23 +39,50 @@ hPlotObj.PlotPoint.Current.XData =xx(iSlice);
 hPlotObj.PlotPoint.Current.YData = yy(iSlice);
 hPlotObj.PlotPoint.Current.MarkerSize = 24;
 
+allP = [xx yy];
+data_main.Point.AllPoint = allP;
+
+% 2 line
+% [x1 y1
+%  x2 y2]
+Lim(1,1) = 1;
+Lim(2,1) = size(allP,1);
+Lim(1,2) = min(allP(:, 2));
+Lim(2,2) = max(allP(:, 2));
+
+hA = data_main.hAxis.PlotPoint;
+
+posUL = Lim;
+posUL(1, 2) = posUL(2, 2);
+
+if data_main.LineDone
+    
+else
+    hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    'Position', pos , 'Tag', 'UL');
+
+pos = Lim;
+pos(2, 2) = pos(1, 2);
+hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    'Color', 'g', 'Position', pos , 'Tag', 'LL');
+
+addlistener(hUL, 'MovingROI', @hUL_callback);
+addlistener(hLL, 'MovingROI', @hUL_callback);
+
+data_main.LinePos.y1 = Lim(1, 2);
+data_main.LinePos.y2 = Lim(2, 2);
+
+data_main.Line.hUL = hUL;
+data_main.Line.hLL = hLL;
+data_main.LineDone = true;
+
 % tumor plot
 data_main.indSS = 1:data_main.nImages;
-data_main.
-
-
-data_main.Point.iSlice = iSlice;
-
-data_main.Point.xm = xm;
+updateTumorPoints(data_main)
+hPlotObj.Tumor.hgPoints.Visible = 'on';
 
 data_main.hToggleButton.Manual.Visible = 'off';
-data_main.hSlider.snake.Visible = 'off';
 
-data_main.hText.Neighbour.Visible = 'on';
-data_main.hPopup.Neighbour.Visible = 'on';
-
-% set(hFig_main, 'CurrentAxes', data_main.hAxis.snake)
-% figure(hFig_main);
 %% save
 guidata(hFig_main, data_main);                
 

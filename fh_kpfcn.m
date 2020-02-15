@@ -19,8 +19,6 @@ switch E.Key
     otherwise  
 end
 
-% update
-
 % on image
 iSlice = round(data_main.hSlider.snake.Value);
 hPlotObj.Point.XData = xi(ixm);
@@ -36,6 +34,15 @@ yy = mean(yi(:, ixm-NP:ixm+NP), 2);
 hPlotObj.PlotPoint.All.YData = yy;
 hPlotObj.PlotPoint.Current.XData = iSlice;
 hPlotObj.PlotPoint.Current.YData = yy(iSlice);
+
+xx = (1:data_main.nImages)';
+data_main.Point.AllPoint = [xx yy];
+
+% 2 line update
+data_main.PlotObj.hUL.Position = [1 max(yy); data_main.nImages max(yy)];
+data_main.PlotObj.hLL.Position = [1 min(yy); data_main.nImages min(yy)];
+data_main.LinePos.y1 = min(yy);
+data_main.LinePos.y2 = max(yy);
 
 data_main.Point.ixm = ixm;
 

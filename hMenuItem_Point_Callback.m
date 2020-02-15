@@ -39,7 +39,44 @@ hPlotObj.PlotPoint.Current.XData =xx(iSlice);
 hPlotObj.PlotPoint.Current.YData = yy(iSlice);
 hPlotObj.PlotPoint.Current.MarkerSize = 24;
 
+allP = [xx yy];
+data_main.Point.AllPoint = allP;
+
 % 2 line
+% [x1 y1
+%  x2 y2]
+Lim(1,1) = 1;
+Lim(2,1) = size(allP,1);
+Lim(1,2) = min(allP(:, 2));
+Lim(2,2) = max(allP(:, 2));
+
+hA = data_main.hAxis.PlotPoint;
+
+posUL = Lim;
+posUL(1, 2) = posUL(2, 2);
+posLL = Lim;
+posLL(2, 2) = posLL(1, 2);
+
+if data_main.LineDone
+    data_main.PlotObj.hUL.Position = posUL;
+    data_main.PlotObj.hLL.Position = posLL;
+else
+    hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+        'Position', posUL, 'Tag', 'UL');
+
+    hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+        'Color', 'g', 'Position', posLL, 'Tag', 'LL');
+
+    addlistener(hUL, 'MovingROI', @hUL_callback);
+    addlistener(hLL, 'MovingROI', @hUL_callback);
+
+    data_main.PlotObj.hUL = hUL;
+    data_main.PlotObj.hLL = hLL;
+    data_main.LineDone = true;
+end
+
+data_main.LinePos.y1 = Lim(1, 2);
+data_main.LinePos.y2 = Lim(2, 2);
 
 % tumor plot
 data_main.indSS = 1:data_main.nImages;

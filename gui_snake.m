@@ -33,6 +33,7 @@ data_main.hPopup = hPopup;
 
 data_main.FreeHandDone = false;
 data_main.SnakeDone = false;
+data_main.LineDone = false;
 
 % data_main.hText = hText;
 % 
