@@ -3,7 +3,6 @@ function hPushButton_DeleteSnake_Callback(src, evnt)
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
 hPlotObj = data_main.hPlotObj;
-hAxis = data_main.hAxis;
 
 iSlice = round(data_main.hSlider.snake.Value);
 data_main.cont{iSlice} = [];
@@ -36,17 +35,15 @@ data_main.Tumor.mask_TC(:, :, iSlice) = false;
 data_main.Tumor.CC_GC{iSlice} = [];
 data_main.Tumor.CC_TC{iSlice} = [];
 
-bwSum = sum(data_main.Tumor.mask_GC, 3)+sum(data_main.Tumor.mask_TC, 3);
+bwSum = sum(mask_GC, 3)+sum(mask_TC, 3);
 hPlotObj.Tumor.bwSum.CData = bwSum;
 if any(bwSum(:))
     hAxis.Tumor.CLim = [min(bwSum(:)) max(bwSum(:))];
 end
 
-hPlotObj.Tumor.TrackContour(iSlice).XData = [];
-hPlotObj.Tumor.TrackContour(iSlice).YData = [];
-hPlotObj.Tumor.GatedContour(iSlice).XData = [];
-hPlotObj.Tumor.GatedContour(iSlice).YData = [];
+hPlotObj.Tumor.TrackContour(n).XData = [];
+hPlotObj.Tumor.TrackContour(n).YData = [];
+hPlotObj.Tumor.GatedContour(n).XData = [];
+hPlotObj.Tumor.GatedContour(n).YData = [];
 
-% save data
-data_main.hPlotObj = hPlotObj;
 guidata(hFig_main, data_main);

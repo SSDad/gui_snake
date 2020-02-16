@@ -15,18 +15,20 @@ ixm = data_main.Point.ixm;
 
 % show on gui
 iSlice = round(data_main.hSlider.snake.Value);
-data_main.hPlotObj.Point.XData = xi(ixm);
-data_main.hPlotObj.Point.YData = yi(iSlice, ixm);
 
-str = data_main.hPopup.Neighbour.String;
-idx = data_main.hPopup.Neighbour.Value;
-NP = str2num(str{idx});
-data_main.Point.NP = NP;
-hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
-hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
-hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
-hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+if ~isempty(data_main.cont{iSlice})
+    hPlotObj.Point.XData = xi(ixm);
+    hPlotObj.Point.YData = yi(iSlice, ixm);
 
+    str = data_main.hPopup.Neighbour.String;
+    idx = data_main.hPopup.Neighbour.Value;
+    NP = str2num(str{idx});
+    data_main.Point.NP = NP;
+    hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+    hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+    hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+    hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+end
 % point plot
 xx = (1:data_main.nImages)';
 yy = mean(yi(:, ixm-NP:ixm+NP), 2);
@@ -57,35 +59,35 @@ posLL(2, 2) = posLL(1, 2);
 
 hA = data_main.hAxis.PlotPoint;
 if data_main.LineDone
-    hPlotObj.hUL.Position = posUL;
-    hPlotObj.hLL.Position = posLL;
+    hPlotObj.UL.Position = posUL;
+    hPlotObj.LL.Position = posLL;
 else
-    hPlotObj.hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    hPlotObj.UL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
         'Position', posUL, 'Tag', 'UL');
 
-    hPlotObj.hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    hPlotObj.LL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
         'Color', 'g', 'Position', posLL, 'Tag', 'LL');
 
-    addlistener(hPlotObj.hUL, 'MovingROI', @hUL_callback);
-    addlistener(hPlotObj.hLL, 'MovingROI', @hUL_callback);
+    addlistener(hPlotObj.UL, 'MovingROI', @hUL_callback);
+    addlistener(hPlotObj.LL, 'MovingROI', @hUL_callback);
 
     data_main.LineDone = true;
-    
-    textPosUL = posUL(2,:);
-    textStrUL = num2str(rr(xR2)-rr(xR1), '%4.1f');
-    textPosLL = posLL(2,:);
-    textPosGap = [posLL(2,1) (posLL(2,2)+posLL(2,2))/2];
-    hPlotObj.PlotPoint.Text.UL = text(hA,  textPosUL(1), textPosUL(2),...
-        '', 'Color', 'w', 'FontSize', 12);
-    hPlotObj.PlotPoint.Text.LL = text(hA,  textPosLL(1), textPosLL(2),...
-        '', 'Color', 'w', 'FontSize', 12);
-    hPlotObj.PlotPoint.Text.Gap = text(hA,  textPosGap(1), textPosGap(2),...
-        '', 'Color', 'w', 'FontSize', 12);
-    
-    hPlotObj.Profile.Text2.Position = [rr(xR2)-4*data_main.dx maxV 0];
-hPlotObj.Profile.Text2.String = num2str(rr(xR2)-rr(xR1), '%4.1f');
-    
+
+    junk = data_main.nImages+3;
+    hPlotObj.PlotPoint.Text.UL = text(hA, junk, 0, '', 'Color', 'w', 'FontSize', 12);
+    hPlotObj.PlotPoint.Text.LL = text(hA, junk, 0, '', 'Color', 'w', 'FontSize', 12);
+    hPlotObj.PlotPoint.Text.Gap = text(hA, junk, 0, '', 'Color', 'w', 'FontSize', 12);
 end
+
+% line position text
+    hPlotObj.PlotPoint.Text.UL.Position(2) =posUL(2,2);
+    hPlotObj.PlotPoint.Text.UL.String = num2str(posUL(2,2), '%4.1f');
+    
+    hPlotObj.PlotPoint.Text.LL.Position(2) = posLL(2,2);
+    hPlotObj.PlotPoint.Text.LL.String = num2str(posLL(2,2), '%4.1f');
+    
+    hPlotObj.PlotPoint.Text.Gap.Position(2) = (posUL(2,2)+posLL(2,2))/2;
+    hPlotObj.PlotPoint.Text.Gap.String = num2str(posUL(2,2)-posLL(2,2), '%4.1f');
 
 data_main.LinePos.y1 = Lim(1, 2);
 data_main.LinePos.y2 = Lim(2, 2);

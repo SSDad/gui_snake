@@ -15,20 +15,24 @@ ixm = data_main.Point.ixm;
 
 % show on gui
 iSlice = round(data_main.hSlider.snake.Value);
-data_main.hPlotObj.Point.XData = xi(ixm);
-data_main.hPlotObj.Point.YData = yi(iSlice, ixm);
-
 str = data_main.hPopup.Neighbour.String;
 idx = data_main.hPopup.Neighbour.Value;
 NP = str2num(str{idx});
 data_main.Point.NP = NP;
-hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
-hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
-hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
-hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
 
+if ~isempty(data_main.cont{iSlice})
+    hPlotObj.Point.XData = xi(ixm);
+    hPlotObj.Point.YData = yi(iSlice, ixm);
+    hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+    hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+    hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+    hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+end
 % point plot
 xx = (1:data_main.nImages)';
+if isempty(data_main.cont{iSlice})
+    xx(iSlice) = nan;
+end
 yy = mean(yi(:, ixm-NP:ixm+NP), 2);
 hPlotObj.PlotPoint.All.XData = xx;
 hPlotObj.PlotPoint.All.YData = yy;
