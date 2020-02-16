@@ -1,6 +1,7 @@
 function [] = fh_kpfcn(H, E)          
 
 data_main = guidata(H);
+hPlotObj = data_main.hPlotObj;
 
 ixm = data_main.Point.ixm;
 xi = data_main.Point.xi;
@@ -13,47 +14,50 @@ switch E.Key
     case 'leftarrow'
         ixm = ixm-1;
 %     case 'return'
-%         data_main.hPlotObj.Point.Color = 'r';
+%         hPlotObj.Point.Color = 'r';
 %         set(H, 'keypressfcn', '');
     otherwise  
 end
 
-xx = (1:data_main.nImages)';
-yy = mean(yi(:, ixm-NP:ixm+NP), 2);
-
 % on image
-data_main.hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
-data_main.hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
-data_main.hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
-data_main.hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+iSlice = round(data_main.hSlider.snake.Value);
+hPlotObj.Point.XData = xi(ixm);
+hPlotObj.Point.YData = yi(iSlice, ixm);
 
-% point plot
-hPlotObj.PlotPoint.All.XData = xx;
+hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+
+% on point plot
+yy = mean(yi(:, ixm-NP:ixm+NP), 2);
 hPlotObj.PlotPoint.All.YData = yy;
+hPlotObj.PlotPoint.Current.XData = iSlice;
+hPlotObj.PlotPoint.Current.YData = yy(iSlice);
 
+xx = (1:data_main.nImages)';
+data_main.Point.AllPoint = [xx yy];
 
-% update
-x1 = [xm xm];
-y1 = [yMean+10 1e4];
+% 2 line update
+y1 = min
+data_main.PlotObj.hUL.Position = [1 max(yy); data_main.nImages max(yy)];
+data_main.PlotObj.hLL.Position = [1 min(yy); data_main.nImages min(yy)];
+data_main.LinePos.y1 = min(yy);
+data_main.LinePos.y2 = max(yy);
 
-[xm, ym] = polyxpoly(x1, y1, xxn, yyn);
+    y1 =data_main.LinePos.y1;
+    y2 = data_main.LinePos.y2;
+    hPlotObj.PlotPoint.Text.UL.Position(2) = y2;
+    hPlotObj.PlotPoint.Text.UL.String =num2str(y2, '%4.1f');
+    hPlotObj.PlotPoint.Text.LL.Position(2) = y1;
+    hPlotObj.PlotPoint.Text.LL.String =num2str(y1, '%4.1f');
+    hPlotObj.PlotPoint.Text.Gap.Position(2) = (y2+y1)/2;
+    hPlotObj.PlotPoint.Text.Gap.String =num2str(y2-y1, '%4.1f');
 
-xL = xm-(1:NP)*dx;
-xR = xm+(1:NP)*dx;
-for n = 1:NP
-    x1 = [xL(n) xL(n)];
-    [~, yL(n)] = polyxpoly(x1, y1, xxn, yyn);
+data_main.Point.ixm = ixm;
 
-    x1 = [xR(n) xR(n)];
-    [~, yR(n)] = polyxpoly(x1, y1, xxn, yyn);
-end
+% on tumor points
+updateTumorPoints(data_main)
 
-% show on gui
-data_main.hPlotObj.Point.XData = xm;
-data_main.hPlotObj.Point.YData = ym;
-data_main.hPlotObj.LeftPoints.XData = xL;
-data_main.hPlotObj.LeftPoints.YData = yL;
-data_main.hPlotObj.RightPoints.XData = xR;
-data_main.hPlotObj.RightPoints.YData = yR;
 
 guidata(H, data_main);

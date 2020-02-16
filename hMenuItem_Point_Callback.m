@@ -57,17 +57,17 @@ posLL(2, 2) = posLL(1, 2);
 
 hA = data_main.hAxis.PlotPoint;
 if data_main.LineDone
-    hPlotObj.hUL.Position = posUL;
-    hPlotObj.hLL.Position = posLL;
+    hPlotObj.UL.Position = posUL;
+    hPlotObj.LL.Position = posLL;
 else
-    hPlotObj.hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    hPlotObj.UL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
         'Position', posUL, 'Tag', 'UL');
 
-    hPlotObj.hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    hPlotObj.LL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
         'Color', 'g', 'Position', posLL, 'Tag', 'LL');
 
-    addlistener(hPlotObj.hUL, 'MovingROI', @hUL_callback);
-    addlistener(hPlotObj.hLL, 'MovingROI', @hUL_callback);
+    addlistener(hPlotObj.UL, 'MovingROI', @hUL_callback);
+    addlistener(hPlotObj.LL, 'MovingROI', @hUL_callback);
 
     data_main.LineDone = true;
 

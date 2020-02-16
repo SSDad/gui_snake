@@ -58,13 +58,13 @@ else
     [~, idx] = max(nP);
     
     % smooth
-    sX = sgolayfilt(B{idx}(:, 1), polynomialOrder, windowWidth);
-    sY = sgolayfilt(B{idx}(:, 2), polynomialOrder, windowWidth);
+    sX = sgolayfilt(B{idx}(:, 2), polynomialOrder, windowWidth);
+    sY = sgolayfilt(B{idx}(:, 1), polynomialOrder, windowWidth);
     data_main.cont{iSlice} = [sX sY];
     
     % show
-    data_main.hPlotObj.cont.XData = (sY-1)*dy+y0;
-    data_main.hPlotObj.cont.YData = (sX-1)*dx+x0;
+    data_main.hPlotObj.cont.YData = (sY-1)*dy+y0;
+    data_main.hPlotObj.cont.XData = (sX-1)*dx+x0;
     
     L.Visible = 'off';
 

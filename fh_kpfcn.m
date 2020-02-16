@@ -39,13 +39,13 @@ xx = (1:data_main.nImages)';
 data_main.Point.AllPoint = [xx yy];
 
 % 2 line update
-data_main.PlotObj.hUL.Position = [1 max(yy); data_main.nImages max(yy)];
-data_main.PlotObj.hLL.Position = [1 min(yy); data_main.nImages min(yy)];
-data_main.LinePos.y1 = min(yy);
-data_main.LinePos.y2 = max(yy);
+y1 = min(yy);
+y2 = max(yy);
+hPlotObj.UL.Position = [1 y2; data_main.nImages y2];
+hPlotObj.LL.Position = [1 y1; data_main.nImages y1];
+data_main.LinePos.y1 = y1;
+data_main.LinePos.y2 = y2;
 
-    y1 =data_main.LinePos.y1;
-    y2 = data_main.LinePos.y2;
     hPlotObj.PlotPoint.Text.UL.Position(2) = y2;
     hPlotObj.PlotPoint.Text.UL.String =num2str(y2, '%4.1f');
     hPlotObj.PlotPoint.Text.LL.Position(2) = y1;
@@ -53,10 +53,9 @@ data_main.LinePos.y2 = max(yy);
     hPlotObj.PlotPoint.Text.Gap.Position(2) = (y2+y1)/2;
     hPlotObj.PlotPoint.Text.Gap.String =num2str(y2-y1, '%4.1f');
 
+% update tumor points
 data_main.Point.ixm = ixm;
-
-% on tumor points
+data_main.hPlotObj = hPlotObj;
 updateTumorPoints(data_main)
-
 
 guidata(H, data_main);
