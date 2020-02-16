@@ -23,7 +23,7 @@ C(:, 2) = (C(:, 2)-data_main.y0)/data_main.dy+1;
 mask = poly2mask(C(:,1), C(:,2), M, N);
 
 %% snakes
-hWB = waitbar(0, 'Snake slithering...');
+% hWB = waitbar(0, 'Snake slithering...');
 nImages = length(II);
 
 L.Visible = 'off';
@@ -42,7 +42,7 @@ for n = 1:nImages
     end
     
     [~, idx] = max(nP);
-    waitbar(n/nImages, hWB);
+%     waitbar(n/nImages, hWB);
     
     % smooth
     sX = sgolayfilt(B{idx}(:, 2), polynomialOrder, windowWidth);
@@ -55,8 +55,9 @@ for n = 1:nImages
     hPlotObj.cont.YData = (sY-1)*dy+y0;
     hPlotObj.cont.XData = (sX-1)*dx+x0;
     data_main.hText.nImages.String = [num2str(n), ' / ', num2str(data_main.nImages)];
+    drawnow;
 end
-close(hWB);
+% close(hWB);
 
 data_main.SnakeDone = true;
 

@@ -44,6 +44,15 @@ data_main.PlotObj.hLL.Position = [1 min(yy); data_main.nImages min(yy)];
 data_main.LinePos.y1 = min(yy);
 data_main.LinePos.y2 = max(yy);
 
+    y1 =data_main.LinePos.y1;
+    y2 = data_main.LinePos.y2;
+    hPlotObj.PlotPoint.Text.UL.Position(2) = y2;
+    hPlotObj.PlotPoint.Text.UL.String =num2str(y2, '%4.1f');
+    hPlotObj.PlotPoint.Text.LL.Position(2) = y1;
+    hPlotObj.PlotPoint.Text.LL.String =num2str(y1, '%4.1f');
+    hPlotObj.PlotPoint.Text.Gap.Position(2) = (y2+y1)/2;
+    hPlotObj.PlotPoint.Text.Gap.String =num2str(y2-y1, '%4.1f');
+
 data_main.Point.ixm = ixm;
 
 % on tumor points

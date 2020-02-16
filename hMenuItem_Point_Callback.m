@@ -22,10 +22,10 @@ str = data_main.hPopup.Neighbour.String;
 idx = data_main.hPopup.Neighbour.Value;
 NP = str2num(str{idx});
 data_main.Point.NP = NP;
-data_main.hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
-data_main.hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
-data_main.hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
-data_main.hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
+hPlotObj.LeftPoints.XData = xi(ixm-NP:ixm-1);
+hPlotObj.LeftPoints.YData = yi(iSlice, ixm-NP:ixm-1);
+hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
+hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
 
 % point plot
 xx = (1:data_main.nImages)';
@@ -50,30 +50,42 @@ Lim(2,1) = size(allP,1);
 Lim(1,2) = min(allP(:, 2));
 Lim(2,2) = max(allP(:, 2));
 
-hA = data_main.hAxis.PlotPoint;
-
 posUL = Lim;
 posUL(1, 2) = posUL(2, 2);
 posLL = Lim;
 posLL(2, 2) = posLL(1, 2);
 
+hA = data_main.hAxis.PlotPoint;
 if data_main.LineDone
-    data_main.PlotObj.hUL.Position = posUL;
-    data_main.PlotObj.hLL.Position = posLL;
+    hPlotObj.hUL.Position = posUL;
+    hPlotObj.hLL.Position = posLL;
 else
-    hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    hPlotObj.hUL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
         'Position', posUL, 'Tag', 'UL');
 
-    hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
+    hPlotObj.hLL = images.roi.Line(hA, 'InteractionsAllowed', 'translate', ...
         'Color', 'g', 'Position', posLL, 'Tag', 'LL');
 
-    addlistener(hUL, 'MovingROI', @hUL_callback);
-    addlistener(hLL, 'MovingROI', @hUL_callback);
+    addlistener(hPlotObj.hUL, 'MovingROI', @hUL_callback);
+    addlistener(hPlotObj.hLL, 'MovingROI', @hUL_callback);
 
-    data_main.PlotObj.hUL = hUL;
-    data_main.PlotObj.hLL = hLL;
     data_main.LineDone = true;
+
+    junk = data_main.nImages+3;
+    hPlotObj.PlotPoint.Text.UL = text(hA, junk, 0, '', 'Color', 'w', 'FontSize', 12);
+    hPlotObj.PlotPoint.Text.LL = text(hA, junk, 0, '', 'Color', 'w', 'FontSize', 12);
+    hPlotObj.PlotPoint.Text.Gap = text(hA, junk, 0, '', 'Color', 'w', 'FontSize', 12);
 end
+
+% line position text
+    hPlotObj.PlotPoint.Text.UL.Position(2) =posUL(2,2);
+    hPlotObj.PlotPoint.Text.UL.String = num2str(posUL(2,2), '%4.1f');
+    
+    hPlotObj.PlotPoint.Text.LL.Position(2) = posLL(2,2);
+    hPlotObj.PlotPoint.Text.LL.String = num2str(posLL(2,2), '%4.1f');
+    
+    hPlotObj.PlotPoint.Text.Gap.Position(2) = (posUL(2,2)+posLL(2,2))/2;
+    hPlotObj.PlotPoint.Text.Gap.String = num2str(posUL(2,2)-posLL(2,2), '%4.1f');
 
 data_main.LinePos.y1 = Lim(1, 2);
 data_main.LinePos.y2 = Lim(2, 2);
@@ -82,6 +94,8 @@ data_main.LinePos.y2 = Lim(2, 2);
 data_main.indSS = 1:data_main.nImages;
 updateTumorPoints(data_main)
 hPlotObj.Tumor.hgPoints.Visible = 'on';
+
+data_main.hPlotObj = hPlotObj;
 
 data_main.hToggleButton.Manual.Visible = 'off';
 

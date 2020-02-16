@@ -15,11 +15,9 @@ function hUL_callback(src, evnt)
     end
         
     hPlotObj.PlotPoint.Text.UL.Position(2) = y2;
-    hPlotObj.PlotPoint.Text.UL.String =num2str(y2, '%4.1f');
-    hPlotObj.PlotPoint.Text.LL.Position(2) = y1;
-    hPlotObj.PlotPoint.Text.LL.String =num2str(y1, '%4.1f');
-    hPlotObj.PlotPoint.Text.Gap.Position(2) = (y2+y1)/2;
-    hPlotObj.PlotPoint.Text.Gap.String =num2str(y2-y1, '%4.1f');
+    hPlotObj.PlotPoint.Text.UL.String =num2str(posUL(2,2), '%4.1f');;
+
+    
     
     if y2>y1
         data_main.Tumor.indSS = find(allP(:, 2) >= y1 & allP(:, 2) <= y2);

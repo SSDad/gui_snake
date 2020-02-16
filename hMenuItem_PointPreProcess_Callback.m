@@ -27,8 +27,11 @@ for iSlice = 1:nImages
     xxh = xx(ind);
 
     xm(iSlice) = mean(xxh);
+
+    n1 = ceil((min(xxh)-x0)/dx);
+    n2 = floor((max(xxh)-x0)/dx);
     
-    for n = 1:nI
+    for n = n1:n2
         x1 = [xi(n) xi(n)];
         y1 = [yMean+10 1e4];
         [~, yc] = polyxpoly(x1, y1, xxh, yyh);
