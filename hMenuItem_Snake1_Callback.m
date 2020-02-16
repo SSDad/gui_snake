@@ -67,6 +67,8 @@ data_main.hPlotObj.cont.XData = (CB(:, 1)-1)*dx+x0;
 
 data_main.hToggleButton.Manual.Visible = 'on';
 data_main.hMenuItem.SaveSnakes.Enable = 'on';
+data_main.hMenuItem.ReContour.Enable = 'on';
+data_main.hMenuItem.ReContour.Checked = 'on';
 % visboundaries(data_main.hAxis.snake, bw, 'Color', 'r'); 
 
 %% save

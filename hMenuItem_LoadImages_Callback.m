@@ -51,6 +51,14 @@ data_main.sliderValue = sV;
 data_main.gatedContour = gatedContour;
 data_main.trackContour = trackContour;
 
+% check previously saved snakes
+[~, fn1, ~] = fileparts(matFile);
+ffn_snakes = fullfile(dataPath, [fn1, '_snakes.mat']);
+if exist(ffn_snakes, 'file')
+    data_main.hMenuItem.LoadSnakes.Enable = 'on';
+end
+data_main.ffn_snakes = ffn_snakes;
+
 waitbar(1/3, hWB, 'Initializing GUI...');
 %% initialize snake panel
 guidata(hFig_main, data_main);
@@ -85,5 +93,5 @@ data_main.hMenuItem.Tumor.TrackContour.Enable = 'on';
 guidata(hFig_main, data_main);
 
 waitbar(1, hWB, 'Bingo!');
-pause(3);
+pause(2);
 close(hWB);

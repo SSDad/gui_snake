@@ -23,7 +23,6 @@ if bV
 
     src.Visible = 'off';
    
-    axes(data_main.hAxis.snake);
     L = images.roi.AssistedFreehand(data_main.hAxis.snake);
     draw(L);
     pause;
