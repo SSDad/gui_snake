@@ -32,8 +32,8 @@ data_main.matFile = matFile;
 ffn = fullfile(dataPath, matFile);
 load(ffn)
 
-data_main.dx = 3.5;
-data_main.dy = 3.5;
+data_main.dx = 3.5/2;
+data_main.dy = 3.5/2;
 data_main.x0 = 0;
 data_main.y0 = 0;
 
@@ -50,6 +50,7 @@ data_main.sliderValue = sV;
 
 data_main.gatedContour = gatedContour;
 data_main.trackContour = trackContour;
+data_main.refContour = refContour;
 
 % check previously saved snakes
 [~, fn1, ~] = fileparts(matFile);
@@ -85,7 +86,7 @@ data_main.hMenuItem.FreeHand.Enable = 'on';
 data_main.hMenuItem.Tumor.Profile.Enable = 'on';
 
 data_main.hMenuItem.Tumor.bwSum.Checked = 'on';
-data_main.hMenuItem.Snake.Enable = 'off';
+data_main.hMenuItem.Snake.Enable = 'on';
 data_main.hMenuItem.Tumor.bwSum.Enable = 'on';
 data_main.hMenuItem.Tumor.TrackContour.Enable = 'on';
 

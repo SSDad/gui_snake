@@ -26,9 +26,9 @@ for iC = 1:nC
 
         [polyA(iC, 1), idx] = max(pA);
         polyA(iC, 2) = length(B);
-        CC{iC} = B{idx};
+        CC{iC} = fliplr(B{idx});
 
-        mask(:,:,iC) = poly2mask(CC{iC}(:, 2), CC{iC}(:, 1), M, N);
+        mask(:,:,iC) = poly2mask(CC{iC}(:, 1), CC{iC}(:, 2), M, N);
         bwSum = bwSum+mask(:,:,iC);
     end
 end

@@ -14,7 +14,7 @@ pause;
 data_main.FreeHand.L = L;
 data_main.FreeHandDone = true;
 
-data_main.hMenuItem.Snake.Enable = 'on';
+data_main.hMenuItem.snake.Enable = 'on';
 
 %% save
 guidata(hFig_main, data_main);                

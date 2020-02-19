@@ -137,16 +137,28 @@ hAxis.Profile = axes('Parent',                   hPanel.Profile, ...
 
                                 
 hold(hAxis.Profile, 'on')
-  
+
+% profile
 hPlotObj.Profile.Profile = line(hAxis.Profile, 'XData', [], 'YData', [],...
     'Marker', '.',  'MarkerSize', 12,...
     'Color', 'c', 'LineStyle', '-');
 
+% patch
 hPlotObj.Profile.Patch1 = patch(hAxis.Profile, 'XData', [], 'YData', [],...
     'FaceColor', 'g', 'FaceAlpha', 0.2, 'EdgeColor', 'none');
-hPlotObj.Profile.Text1 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
-
 hPlotObj.Profile.Patch2 = patch(hAxis.Profile, 'XData', [], 'YData', [],...
     'FaceColor', 'g', 'FaceAlpha', 0.2, 'EdgeColor', 'none');
+
+hPlotObj.Profile.Text1 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
 hPlotObj.Profile.Text2 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
 
+% ref contour
+hPlotObj.Profile.RefLeft = line(hAxis.Profile, 'XData', [], 'YData', [],...
+     'Color', 'r', 'LineStyle', '-');
+hPlotObj.Profile.RefRight = line(hAxis.Profile, 'XData', [], 'YData', [],...
+     'Color', 'r', 'LineStyle', '-');
+
+hPlotObj.Profile.RefTextLeft1 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
+hPlotObj.Profile.RefTextLeft2 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
+hPlotObj.Profile.RefTextRight1 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
+hPlotObj.Profile.RefTextRight2 = text(hAxis.Profile,  0, 0, '', 'Color', 'w', 'FontSize', 12);
