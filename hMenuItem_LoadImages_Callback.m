@@ -6,7 +6,7 @@ hPanel = data_main.hPanel;
 hAxis = data_main.hAxis;
 hSlider = data_main.hSlider;
 
-%% load data
+%% load image data
 td = tempdir;
 fd_info = fullfile(td, 'TaehoTracking');
 fn_info = fullfile(fd_info, 'info.mat');

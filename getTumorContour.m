@@ -10,6 +10,18 @@ ffn = fullfile(dataPath, [fn1, '_Tumor.mat']);
 
 if exist(ffn, 'file')
     load(ffn)
+    if ~exist('CC_RC', 'var')
+        [M, N, ~] = size(data_main.hPlotObj.snakeImage.CData);
+        contRC = data_main.refContour;
+        iP = round(size(contRC, 1)/2);
+        [Xout, Yout]=fun_points2contour(contRC(:, 1), contRC(:,2), iP, 'ccw');
+        CC_RC{1} = [N-Yout'+1 Xout'];
+    
+        % save as 1x1 pixel size
+        nImages = length(contGC);
+        save(ffn, 'bwSum_*', 'mask_*', 'polyA_*', 'CC_*', 'M', 'N', 'nImages');
+    end    
+    
 else
     [M, N, ~] = size(data_main.hPlotObj.snakeImage.CData);
     contGC = data_main.gatedContour;
@@ -19,7 +31,6 @@ else
     [bwCAll_TC, mask_TC, bwSum_TC, polyA_TC, CC_TC] = fun_getCC(contTC, M, N);
 
     contRC = data_main.refContour;
-%     [bwCAll_RC, mask_RC, bwSum_RC, polyA_RC, CC_RC] = fun_getCC(contRC, M, N);
     iP = round(size(contRC, 1)/2);
     [Xout, Yout]=fun_points2contour(contRC(:, 1), contRC(:,2), iP, 'ccw');
     CC_RC{1} = [N-Yout'+1 Xout'];
