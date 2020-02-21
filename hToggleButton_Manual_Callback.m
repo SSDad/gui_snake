@@ -19,10 +19,15 @@ if bV
     
     set(data_main.hPlotObj.cont, 'XData', [], 'YData', []);
 %     data_main.hPlotObj.cont.YData = [];
-    data_main.cont{iSlice} = [];
+%     data_main.cont{iSlice} = [];
 
     src.Visible = 'off';
    
+%     C = data_main.cont{iSlice};
+%     C(:, 1) = (C(:, 1)-1)*dx+x0;
+%     C(:, 2) = (C(:, 2)-1)*dy+y0;
+%     L = drawfreehand(data_main.hAxis.snake, 'Position', C);
+    
     axes(data_main.hAxis.snake);
     L = images.roi.AssistedFreehand(data_main.hAxis.snake);
     draw(L);
