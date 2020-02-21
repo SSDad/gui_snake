@@ -1,7 +1,9 @@
 function gui_snake
 
-%% main window
+%% global 
+global stopSlither
 
+%% main window
 hFig_main = figure('MenuBar',            'none', ...
                     'Toolbar',              'none', ...
                     'HandleVisibility',  'callback', ...

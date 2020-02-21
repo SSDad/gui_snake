@@ -1,4 +1,6 @@
-function hMenuItem_Snake2_Callback(src, evnt)
+function hPushButton_Slither2_Start_Callback(src, evnt)
+
+global stopSlither
 
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
@@ -52,10 +54,23 @@ hPlotObj.cont.YData = SC(:, 2)*dx+x0;
 nImages = length(II);
 
 % sgolay filter param
-windowWidth = 75;
+windowWidth =  round(N/15)*2+1;
 polynomialOrder = 3;
+
+str = data_main.hPopup.SGolayParam(1).String;
+idx = data_main.hPopup.SGolayParam(1).Value;
+windowWidth = str2num(str{idx});
+str = data_main.hPopup.SGolayParam(2).String;
+idx = data_main.hPopup.SGolayParam(2).Value;
+polynomialOrder = str2num(str{idx});
+
+str = data_main.hPopup.SnakeParam(1).String;
+idx = data_main.hPopup.SnakeParam(1).Value;
+nIter = str2num(str{idx});
+
+
 % up
-for n = sV+1:100%nImages
+for n = sV+1:nImages
     J =  rgb2gray(II{n});
     J = rot90(J, 3);
     MC = data_main.cont{n-1};
@@ -63,7 +78,7 @@ for n = sV+1:100%nImages
     hPlotObj.contMask.YData = MC(:, 2)*dx+x0;
 
     mask = poly2mask(MC(:,1), MC(:,2), M, N);
-    bw = activecontour(J, mask, 20, 'Chan-Vese', 'SmoothFactor', 1.5, 'ContractionBias', -0.2);
+    bw = activecontour(J, mask, 20, 'Chan-Vese', 'SmoothFactor', 1.5, 'ContractionBias', -0.25);
     B = bwboundaries(bw);
     
     nP = [];
@@ -88,6 +103,11 @@ for n = sV+1:100%nImages
     data_main.hText.nImages.String = [num2str(n), ' / ', num2str(data_main.nImages)];
     drawnow;
    
+    if stopSlither
+        stopSlither = false;
+        break;
+    end
+    
 end
 
 % down
