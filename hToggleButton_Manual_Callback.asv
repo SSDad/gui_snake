@@ -1,7 +1,5 @@
 function hToggleButton_Manual_Callback(src, evnt)
 
-global reContL
-
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
 
@@ -17,10 +15,7 @@ bV = src.Value;
 iSlice = round(data_main.hSlider.snake.Value);
 
 if bV
-
-    src.String = 'Slither';
-    src.ForegroundColor = 'c';
-
+    
     %     data_main.hSlider.snake.Visible = 'off';
     
 %     data_main.hPlotObj.cont.YData = [];
@@ -33,16 +28,19 @@ if bV
     C = data_main.cont{iSlice};
     C(:, 1) = (C(:, 1)-1)*dx+x0;
     C(:, 2) = (C(:, 2)-1)*dy+y0;
-    reContL = drawfreehand(data_main.hAxis.snake, 'Position', C);
+    L = drawfreehand(data_main.hAxis.snake, 'Position', C);
     
 %     L = images.roi.AssistedFreehand(data_main.hAxis.snake);
-%     draw(L);
-%       pause;
+    draw(L);
+      pause;
 
 %     src.Visible = 'on';
+    set(data_main.hPlotObj.cont, 'XData', [], 'YData', []);
 
+    src.String = 'Slither';
+    src.ForegroundColor = 'c';
 
-%     data_main.FreeHand.L = L;
+    data_main.FreeHand.L = L;
 %     data_main.FreeHand.iSlice = iSlice;
 
 else
@@ -51,11 +49,11 @@ else
     src.ForegroundColor = 'g';
 %     data_main.hSlider.snake.Visible = 'on';
     
-%     L = data_main.FreeHand.L;
+    L = data_main.FreeHand.L;
    
     I = data_main.hPlotObj.snakeImage.CData;
-    [M, N, ~] = size(I);
-    C = reContL.Position;
+    [M, N] = size(I);
+    C = L.Position;
     
     % convert to ij
     C(:, 1) = (C(:, 1)-data_main.x0)/data_main.dx+1;
@@ -80,12 +78,11 @@ else
     sY = sgolayfilt(B{idx}(:, 1), polynomialOrder, windowWidth);
     data_main.cont{iSlice} = [sX sY];
     
-%     set(data_main.hPlotObj.cont, 'XData', [], 'YData', []);
     % show
     data_main.hPlotObj.cont.YData = (sY-1)*dy+y0;
     data_main.hPlotObj.cont.XData = (sX-1)*dx+x0;
     
-    reContL.Visible = 'off';
+    L.Visible = 'off';
 
 end
 

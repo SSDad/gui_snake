@@ -19,40 +19,6 @@ J =  rgb2gray(II{sV});
 J = rot90(J, 3);
 [M, N] = size(J);
 
-L = data_main.FreeHand.L;
-L.Visible = 'off';
-FC = L.Position;
-hPlotObj.contMask.XData = FC(:, 1);
-hPlotObj.contMask.YData = FC(:, 2);
-
-% convert to ij
-FC(:, 1) = (FC(:, 1)-data_main.x0)/data_main.dx+1;
-FC(:, 2) = (FC(:, 2)-data_main.y0)/data_main.dy+1;
-mask = poly2mask(FC(:,1), FC(:,2), M, N);
-
-% sname
-bw = activecontour(J, mask, 10);
-B = bwboundaries(bw);
-nP = [];
-for m = 1:length(B)
-    nP(m) = size(B{m}, 1);
-end
-[~, idx] = max(nP);
-
-SC = fliplr(B{idx});
-data_main.cont{sV} = SC; %save in pixel s
-
-% show
-data_main.hSlider.snake.Value = sV;
-hPlotObj.snakeImage.CData = rot90(data_main.Images{sV}, 3);
-
-hPlotObj.cont.XData = SC(:, 1)*dy+y0;
-hPlotObj.cont.YData = SC(:, 2)*dx+x0;
-
-%% snakes
-% hWB = waitbar(0, 'Snake slithering...');
-nImages = length(II);
-
 % sgolay filter param
 % windowWidth =  round(N/15)*2+1;
 % polynomialOrder = 3;
@@ -77,41 +43,102 @@ str = data_main.hPopup.SnakeParam(3).String;
 idx = data_main.hPopup.SnakeParam(3).Value;
 smoothFactor = str2num(str{idx});
 
+snakeParam.nIter = nIter;
+snakeParam.contractionBias = contractionBias;
+snakeParam.smoothFactor = smoothFactor;
+
+% First slice
+L = data_main.FreeHand.L;
+L.Visible = 'off';
+FC = L.Position;
+hPlotObj.maskCont.XData = FC(:, 1);
+hPlotObj.maskCont.YData = FC(:, 2);
+
+% convert to ij
+FCij(:, 1) = (FC(:, 1)-data_main.x0)/data_main.dx+1;
+FCij(:, 2) = (FC(:, 2)-data_main.y0)/data_main.dy+1;
+
+% smooth
+FCijs(:, 1) = sgolayfilt(FCij(:, 1), polynomialOrder, windowWidth);
+FCijs(:, 2) = sgolayfilt(FCij(:, 2), polynomialOrder, windowWidth);
+MC1 = FCijs;
+mask1 = poly2mask(MC1(:, 1), MC1(:,2), M, N);
+data_main.maskCont{sV} = FCijs;
+
+[SCij] = fun_aac1(J, FCijs, snakeParam);
+
+    % smooth
+    SCijs(:, 1) = sgolayfilt(SCij(:, 1), polynomialOrder, windowWidth);
+    SCijs(:, 2) = sgolayfilt(SCij(:, 2), polynomialOrder, windowWidth);
+
+
+% mask = poly2mask(FCijs(:,1), FCijs(:,2), M, N);
+% 
+% 
+% % snake
+% % bw = activecontour(J, mask, 10);
+% bw = activecontour(J, mask, nIter, 'Chan-Vese',...
+%         'SmoothFactor', smoothFactor, 'ContractionBias', contractionBias);
+% 
+% B = bwboundaries(bw);
+% nP = [];
+% for m = 1:length(B)
+%     nP(m) = size(B{m}, 1);
+% end
+% [~, idx] = max(nP);
+% 
+% SC = fliplr(B{idx});
+data_main.cont{sV} = SCijs; %save in pixel s
+
+% show
+data_main.hSlider.snake.Value = sV;
+hPlotObj.snakeImage.CData = rot90(data_main.Images{sV}, 3);
+
+hPlotObj.cont.XData = SCijs(:, 1)*dy+y0;
+hPlotObj.cont.YData = SCijs(:, 2)*dx+x0;
+
+clear SC*;
+
+%% snakes
+% hWB = waitbar(0, 'Snake slithering...');
+nImages = length(II);
+
+delta.Area = [];
+delta.XOR = [];
+delta.Area1 = zeros(nImages, 1);
+delta.XOR1 = zeros(nImages, 1);
+
 % up
 for n = sV+1:nImages
     J =  rgb2gray(II{n});
     J = rot90(J, 3);
+    
     MC = data_main.cont{n-1};
-    hPlotObj.contMask.XData = MC(:, 1)*dy+y0;
-    hPlotObj.contMask.YData = MC(:, 2)*dx+x0;
+    data_main.maskCont{n} = MC;
+    hPlotObj.maskCont.XData = MC(:, 1)*dy+y0;
+    hPlotObj.maskCont.YData = MC(:, 2)*dx+x0;
 
-    mask = poly2mask(MC(:,1), MC(:,2), M, N);
-    bw = activecontour(J, mask, nIter, 'Chan-Vese',...
-        'SmoothFactor', smoothFactor, 'ContractionBias', contractionBias);
-    B = bwboundaries(bw);
-    
-    nP = [];
-    for m = 1:length(B)
-        nP(m) = size(B{m}, 1);
-    end
-    [~, idx] = max(nP);
+[SCij, delta.Area1(n), delta.XOR1(n), dA, dXOR] = fun_aac(J, MC, snakeParam, MC1, mask1);
 
-    C = fliplr(B{idx});
-    
+delta.Area = [delta.Area; dA];
+delta.XOR = [delta.XOR; dXOR];
+
     % smooth
-    C(:, 1) = sgolayfilt(C(:, 1), polynomialOrder, windowWidth);
-    C(:, 2) = sgolayfilt(C(:, 2), polynomialOrder, windowWidth);
+    SCijs(:, 1) = sgolayfilt(SCij(:, 1), polynomialOrder, windowWidth);
+    SCijs(:, 2) = sgolayfilt(SCij(:, 2), polynomialOrder, windowWidth);
 
-    data_main.cont{n} = C;
+    data_main.cont{n} = SCijs;
 %     waitbar((n-sV)/nImages, hWB);
     
     data_main.hSlider.snake.Value = n;
     hPlotObj.snakeImage.CData = rot90(data_main.Images{n}, 3);
-    hPlotObj.cont.XData = C(:, 1)*dx+x0;
-    hPlotObj.cont.YData = C(:, 2)*dy+y0;
+    hPlotObj.cont.XData = SCijs(:, 1)*dx+x0;
+    hPlotObj.cont.YData = SCijs(:, 2)*dy+y0;
     data_main.hText.nImages.String = [num2str(n), ' / ', num2str(data_main.nImages)];
     drawnow;
    
+    clear SC*;
+    
     if stopSlither
         stopSlither = false;
         break;
@@ -143,10 +170,13 @@ end
 
 data_main.SnakeDone = true;
 
-CB =   data_main.cont{n};
-hPlotObj.cont.XData = C(:, 1)*dx+x0;
-hPlotObj.cont.YData = C(:, 2)*dy+y0;
+SCijs =   data_main.cont{n};
+hPlotObj.cont.XData = SCijs(:, 1)*dx+x0;
+hPlotObj.cont.YData = SCijs(:, 2)*dy+y0;
 
+MC = data_main.maskCont{n};
+hPlotObj.maskCont.XData = MC(:, 1)*dy+y0;
+hPlotObj.maskCont.YData = MC(:, 2)*dx+x0;
 
 % visboundaries(data_main.hAxis.snake, bw, 'Color', 'r'); 
 

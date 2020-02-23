@@ -74,6 +74,7 @@ data_main = guidata(hFig_main);
 
 %% data initilization
 data_main.cont = cell(nImages, 1);
+data_main.maskCont = data_main.cont;
 data_main.FreeHand = [];
 data_main.FreeHandDone = false;
 data_main.SnakeDone = false;

@@ -41,7 +41,7 @@ for iR = 1:nR
 end
 
 % data
-txt.DataStr{1} = {'35', '45', '55', '65', '75', '85'};
+txt.DataStr{1} = {'35', '45', '55', '65', '75', '85', '95'};
 txt.DataStr{2} = {'2', '3', '4'};
 for iR = 1:nR
     hPU(iR) = uicontrol('parent', hPN(iR, 2), ...

@@ -13,6 +13,9 @@ xi = data_main.Point.xi;
 yi = data_main.Point.yi;
 ixm = data_main.Point.ixm;
 
+% turn off mask contour
+hPlotObj.maskCont.Visible = 'off';
+
 % show on gui
 iSlice = round(data_main.hSlider.snake.Value);
 str = data_main.hPopup.Neighbour.String;
