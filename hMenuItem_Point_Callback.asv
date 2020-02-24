@@ -103,7 +103,7 @@ updateTumorPoints(data_main)
 hPlotObj.Tumor.hgPoints.Visible = 'on';
 
 data_main.hMenuItem.Tumor.Points.Enable = 'on';
-data_main.hMenuItem.Tumor.Points.Checked = 'on';
+data_main.hMenuItem.Tumor.Points.Enable = 'on';
 
 data_main.hPlotObj = hPlotObj;
 

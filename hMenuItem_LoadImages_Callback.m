@@ -53,6 +53,7 @@ data_main.indSS = 1:nImages;
 sV = round(nImages/2);
 sV = 1;
 data_main.sliderValue = sV;
+data_main.FreeHandSlice = [];
 
 data_main.gatedContour = gatedContour;
 data_main.trackContour = trackContour;
