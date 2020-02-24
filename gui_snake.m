@@ -3,6 +3,7 @@ function gui_snake
 %% global 
 global stopSlither
 global reContL
+global contrastRectLim
 
 %% main window
 hFig_main = figure('MenuBar',            'none', ...

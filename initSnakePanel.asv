@@ -45,7 +45,7 @@ hPlotObj.Contrast.Hist = line(hAxis.Contrast,...
     'XData', xc, 'YData', yc, 'Color', 'w', 'LineStyle', '-', 'LineWidth', 1);
 hPlotObj.Contrast.Rect =images.roi.Rectangle(hAxis.Contrast,...
     'Position',[0, 0,1, 1], 'FaceAlpha', 0.3);
-addlistener(hPlotObj.Contrast.Rect, 'MovingROI', @hContrastRect_callback);
+addlistener(hPlotObj.Contrast.Rect, 'MovingROI', @hContrastRect_ca);
 
 hAxis.Contrast.XLim = [0 1];
 hAxis.Contrast.YLim = [0 1];

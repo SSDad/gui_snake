@@ -1,7 +1,10 @@
 function hSlider_snake_Callback(src, evnt)
 
+global contrastRectLim
+
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
+hPlotObj = data_main.hPlotObj;
 
 x0 = data_main.x0;
 y0 = data_main.y0;
@@ -9,9 +12,26 @@ dx = data_main.dx;
 dy = data_main.dy;
 
 sV = round(get(src, 'Value'));
+I = rot90(data_main.Images{sV}, 3);
 
-hPlotObj = data_main.hPlotObj;
-hPlotObj.snakeImage.CData = rot90(data_main.Images{sV}, 3);
+% hist
+yc = histcounts(I, max(I(:))+1);
+yc = log10(yc);
+yc = yc/max(yc);
+xc = 1:length(yc);
+xc = xc/max(xc);
+hPlotObj.Contrast.Hist.XData = xc;
+hPlotObj.Contrast.Hist.YData = yc;
+
+% contrast limit
+maxI = max(I(:));
+minI = min(I(:));
+wI = maxI-minI;
+cL1 = minI+wI*contrastRectLim(1);
+cL2 = minI+wI*contrastRectLim(2);
+I(I<cL1) = cL1;
+I(I>cL2) = cL2;
+hPlotObj.snakeImage.CData = I;
 
 if data_main.FreeHandDone
     data_main.FreeHand.L.Visible = 'off';
