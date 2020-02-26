@@ -3,7 +3,7 @@
     <param.appname>MAXIM</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.0</param.version>
+    <param.version>2.0</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
@@ -45,7 +45,6 @@
     <unset>
       <param.icon />
       <param.icons />
-      <param.version />
       <param.authnamewatermark />
       <param.email />
       <param.company />
@@ -85,15 +84,25 @@
     <fileset.resources />
     <fileset.package />
     <fileset.depfun>
+      <file>${PROJECT_ROOT}\addContrastBar.m</file>
       <file>${PROJECT_ROOT}\addMenu.m</file>
       <file>${PROJECT_ROOT}\addPanel.m</file>
+      <file>${PROJECT_ROOT}\addPanel_SGolay.m</file>
+      <file>${PROJECT_ROOT}\addPanel_Slither.m</file>
       <file>${PROJECT_ROOT}\addToolbar.m</file>
       <file>${PROJECT_ROOT}\fh_kpfcn.m</file>
+      <file>${PROJECT_ROOT}\fun_aac.m</file>
+      <file>${PROJECT_ROOT}\fun_aac1.m</file>
       <file>${PROJECT_ROOT}\fun_getCC.m</file>
+      <file>${PROJECT_ROOT}\fun_myTable.m</file>
+      <file>${PROJECT_ROOT}\fun_myTablePopup.m</file>
+      <file>${PROJECT_ROOT}\fun_points2contour.m</file>
       <file>${PROJECT_ROOT}\getTumorContour.m</file>
+      <file>${PROJECT_ROOT}\hContrastRect_callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_DeletePoint_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_FreeHand_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_Help_About_Callback.m</file>
+      <file>${PROJECT_ROOT}\hMenuItem_ImageInfo_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_LoadImages_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_LoadSnakes_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_Point_Callback.m</file>
@@ -101,13 +110,15 @@
       <file>${PROJECT_ROOT}\hMenuItem_PointPreProcess_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_ReContour_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_SaveSnakes_Callback.m</file>
-      <file>${PROJECT_ROOT}\hMenuItem_Snake1_Callback.m</file>
+      <file>${PROJECT_ROOT}\hMenuItem_Slither_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_Tumor_bwSum_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_Tumor_Points_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_Tumor_Profile_Callback.m</file>
       <file>${PROJECT_ROOT}\hMenuItem_Tumor_TrackContour_Callback.m</file>
       <file>${PROJECT_ROOT}\hPL_callback.m</file>
       <file>${PROJECT_ROOT}\hPushButton_DeleteSnake_Callback.m</file>
+      <file>${PROJECT_ROOT}\hPushButton_Slither2_Start_Callback.m</file>
+      <file>${PROJECT_ROOT}\hPushButton_Slither_Stop_Callback.m</file>
       <file>${PROJECT_ROOT}\hSlider_snake_Callback.m</file>
       <file>${PROJECT_ROOT}\hToggleButton_Manual_Callback.m</file>
       <file>${PROJECT_ROOT}\hUL_callback.m</file>

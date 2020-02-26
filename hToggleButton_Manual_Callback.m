@@ -33,7 +33,12 @@ if bV
     C = data_main.cont{iSlice};
     C(:, 1) = (C(:, 1)-1)*dx+x0;
     C(:, 2) = (C(:, 2)-1)*dy+y0;
-    reContL = drawfreehand(data_main.hAxis.snake, 'Position', C);
+    
+    nWP = size(C, 1);
+    WP = false(nWP, 1);
+    WP(round(linspace(1, nWP-nWP/14, 14))) = true;
+    
+    reContL = drawfreehand(data_main.hAxis.snake, 'Position', C, 'Waypoints', WP);
     
 %     L = images.roi.AssistedFreehand(data_main.hAxis.snake);
 %     draw(L);

@@ -1,5 +1,7 @@
 function initSnakePanel(hFig_main)
 
+global contrastRectLim
+
 data_main = guidata(hFig_main);
 hPanel = data_main.hPanel;
 hAxis = data_main.hAxis;
@@ -49,6 +51,8 @@ addlistener(hPlotObj.Contrast.Rect, 'MovingROI', @hContrastRect_callback);
 
 hAxis.Contrast.XLim = [0 1];
 hAxis.Contrast.YLim = [0 1];
+
+contrastRectLim = [0 1];
 
 % contour
 hPlotObj.cont = line(hAxis.snake,...

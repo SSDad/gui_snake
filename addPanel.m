@@ -105,10 +105,10 @@ hPanel.ImageInfo = uipanel('parent', hPanel.snake,...
                                 'ShadowColor',            'k');
 
 nR = 3;
-txt.FirstRow = {'Name', 'Unit(mm)'};
-txt.FirstColumn = {'x0'; 'y0'; 'pixel size'};
+txt.FirstRow = {'Name', 'Value'};
+txt.FirstColumn = {'FoV'; 'Image Size'; 'Pixel Size'};
 columnRatio = [1]; % width ratio to first column
-txt.DataStr = {'0';'0';'3.5'};
+txt.DataStr = {'350'; '466'; ''};
 
 [hEdit.ImageInfo] = fun_myTable(hPanel.ImageInfo, nR, columnRatio, txt);
 

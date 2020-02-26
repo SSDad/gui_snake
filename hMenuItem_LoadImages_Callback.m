@@ -33,15 +33,19 @@ ffn = fullfile(dataPath, matFile);
 load(ffn)
 
 %% load image info
-data_main.x0 = str2num(data_main.hEdit.ImageInfo(1).String);
-data_main.y0 = str2num(data_main.hEdit.ImageInfo(2).String);
-data_main.dx = str2num(data_main.hEdit.ImageInfo(3).String);
+data_main.x0 = 0;
+data_main.y0 = 0;
+
+data_main.FoV = str2num(data_main.hEdit.ImageInfo(1).String);
+data_main.ImageSize = str2num(data_main.hEdit.ImageInfo(2).String);
+data_main.dx = data_main.FoV/data_main.ImageSize;
 data_main.dy = data_main.dx;
- 
+
+data_main.hEdit.ImageInfo(3).String = num2str(data_main.dx);
+data_main.hEdit.ImageInfo(3).ForegroundColor = 'c';
+
 % data_main.dx = 3.5;
 % data_main.dy = 3.5;
-% data_main.x0 = 0;
-% data_main.y0 = 0;
 
 data_main.Images = imgWrite;
 nImages = length(imgWrite);
