@@ -108,7 +108,7 @@ nR = 3;
 txt.FirstRow = {'Name', 'Value'};
 txt.FirstColumn = {'FoV'; 'Image Size'; 'Pixel Size'};
 columnRatio = [1]; % width ratio to first column
-txt.DataStr = {'350'; '466'; ''};
+txt.DataStr = {'350'; ''; ''};
 
 [hEdit.ImageInfo] = fun_myTable(hPanel.ImageInfo, nR, columnRatio, txt);
 
