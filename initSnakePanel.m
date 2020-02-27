@@ -56,7 +56,7 @@ contrastRectLim = [0 1];
 
 % contour
 hPlotObj.cont = line(hAxis.snake,...
-    'XData', [], 'YData', [], 'Color', 'c', 'LineStyle', '-', 'LineWidth', 1);
+    'XData', [], 'YData', [], 'Color', 'm', 'LineStyle', '-', 'LineWidth', 3);
 hPlotObj.maskCont = line(hAxis.snake,...
     'XData', [], 'YData', [], 'Color', 'm', 'LineStyle', '-', 'LineWidth', 1);
 

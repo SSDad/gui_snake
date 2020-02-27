@@ -19,16 +19,16 @@ hWB = waitbar(0, 'Finding points on Diaphragm...');
 
 for iSlice = 1:nImages
     C = data_main.cont{iSlice};
-    xxh = (C(:, 1)-1)*dx+x0;
-    yyh = (C(:, 2)-1)*dy+y0;
+    xx = (C(:, 1)-1)*dx+x0;
+    yy = (C(:, 2)-1)*dy+y0;
     
-%     mi = round(length(xx)/2);
-%     xi = round(xx(mi));
-%     
-%     yMean = mean(yy);
-%     ind = find(yy>yMean);
-%     yyh = yy(ind);
-%     xxh = xx(ind);
+    mi = round(length(xx)/2);
+    xi = round(xx(mi));
+    
+    yMean = mean(yy);
+    ind = find(yy>yMean);
+    yyh = yy(ind);
+    xxh = xx(ind);
 
     xm(iSlice) = mean(xxh);
 
@@ -37,7 +37,7 @@ for iSlice = 1:nImages
     
     for n = n1:n2
         x1 = [xi(n) xi(n)];
-        y1 = [1 1e4];
+        y1 = [yMean+10 1e4];
         [~, yc] = polyxpoly(x1, y1, xxh, yyh);
         if length(yc)>1
             yi(iSlice, n) = max(yc);

@@ -7,9 +7,10 @@ hSlider = data_main.hSlider.snake;
 data_main.FreeHand.iSlice = round(hSlider.Value);
 
 % axis(data_main.hAxis.snake);
-L = images.roi.AssistedFreehand(data_main.hAxis.snake, 'Image', data_main.hPlotObj.snakeImage);
+L = images.roi.AssistedFreehand(data_main.hAxis.snake,...
+    'Image', data_main.hPlotObj.snakeImage, ...
+    'Closed', 0);
 draw(L);
-pause;
 
 data_main.FreeHand.L = L;
 data_main.FreeHandDone = true;
