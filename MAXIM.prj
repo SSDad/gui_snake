@@ -1,9 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="C:\Users\zji\Box\TaehoKimImages\matlab\gui_snake\MAXIM.prj" location="C:\Users\zji\Box\TaehoKimImages\matlab\gui_snake" name="MAXIM" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="C:\Users\zji\Documents\ViewRay\MAXIM\gui_snake\MAXIM.prj" location="C:\Users\zji\Documents\ViewRay\MAXIM\gui_snake" name="MAXIM" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>MAXIM</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>2.0</param.version>
+    <param.version>3.0</param.version>
     <param.authnamewatermark />
     <param.email />
     <param.company />
@@ -91,8 +91,7 @@
       <file>${PROJECT_ROOT}\addPanel_Slither.m</file>
       <file>${PROJECT_ROOT}\addToolbar.m</file>
       <file>${PROJECT_ROOT}\fh_kpfcn.m</file>
-      <file>${PROJECT_ROOT}\fun_aac.m</file>
-      <file>${PROJECT_ROOT}\fun_aac1.m</file>
+      <file>${PROJECT_ROOT}\fun_findDiaphragm.m</file>
       <file>${PROJECT_ROOT}\fun_getCC.m</file>
       <file>${PROJECT_ROOT}\fun_myTable.m</file>
       <file>${PROJECT_ROOT}\fun_myTablePopup.m</file>
@@ -117,8 +116,8 @@
       <file>${PROJECT_ROOT}\hMenuItem_Tumor_TrackContour_Callback.m</file>
       <file>${PROJECT_ROOT}\hPL_callback.m</file>
       <file>${PROJECT_ROOT}\hPushButton_DeleteSnake_Callback.m</file>
-      <file>${PROJECT_ROOT}\hPushButton_Slither2_Start_Callback.m</file>
       <file>${PROJECT_ROOT}\hPushButton_Slither_Stop_Callback.m</file>
+      <file>${PROJECT_ROOT}\hPushButton_TMSnake_Start_Callback.m</file>
       <file>${PROJECT_ROOT}\hSlider_snake_Callback.m</file>
       <file>${PROJECT_ROOT}\hToggleButton_Manual_Callback.m</file>
       <file>${PROJECT_ROOT}\hUL_callback.m</file>
@@ -130,9 +129,9 @@
       <file>${PROJECT_ROOT}\updateTumorProfile.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\MAXIM\for_testing" name="MAXIM.exe" optional="false">C:\Users\zji\Box\TaehoKimImages\matlab\gui_snake\MAXIM\for_testing\MAXIM.exe</file>
-      <file location="${PROJECT_ROOT}\MAXIM\for_testing" name="splash.png" optional="false">C:\Users\zji\Box\TaehoKimImages\matlab\gui_snake\MAXIM\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\MAXIM\for_testing" name="readme.txt" optional="true">C:\Users\zji\Box\TaehoKimImages\matlab\gui_snake\MAXIM\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\MAXIM\for_testing" name="splash.png" optional="false">C:\Users\zji\Documents\ViewRay\MAXIM\gui_snake\MAXIM\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\MAXIM\for_testing" name="MAXIM.exe" optional="false">C:\Users\zji\Documents\ViewRay\MAXIM\gui_snake\MAXIM\for_testing\MAXIM.exe</file>
+      <file location="${PROJECT_ROOT}\MAXIM\for_testing" name="readme.txt" optional="true">C:\Users\zji\Documents\ViewRay\MAXIM\gui_snake\MAXIM\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>

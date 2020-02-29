@@ -56,7 +56,7 @@ for n = 1:data_main.nImages
     end
     
     hPlotObj.Tumor.Points(n) = line(hPlotObj.Tumor.hgPoints, 'XData', [], 'YData', [],...
-        'Marker', '.',  'MarkerSize', 12, 'Color', 'r', 'LineStyle', 'none');
+        'Marker', '.',  'MarkerSize', 12, 'Color', 'c', 'LineStyle', 'none');
 end
 
 n = 1;

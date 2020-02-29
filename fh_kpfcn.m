@@ -52,6 +52,18 @@ data_main.LinePos.y2 = y2;
     hPlotObj.PlotPoint.Text.LL.String =num2str(y1, '%4.1f');
     hPlotObj.PlotPoint.Text.Gap.Position(2) = (y2+y1)/2;
     hPlotObj.PlotPoint.Text.Gap.String =num2str(y2-y1, '%4.1f');
+    
+    % tumor line
+    hPlotObj.tumorUL.YData = [y2 y2];
+    hPlotObj.tumorLL.YData = [y1 y1];
+    
+    strTP = num2str(length(yy));
+    hPlotObj.Tumor.Text.UL.Position(2) = y2;
+    hPlotObj.Tumor.Text.UL.String =['0 / ', strTP];
+    hPlotObj.Tumor.Text.LL.Position(2) = y1;
+    hPlotObj.Tumor.Text.LL.String = ['0 / ', strTP];
+    hPlotObj.Tumor.Text.Gap.Position(2) = (y2+y1)/2;
+    hPlotObj.Tumor.Text.Gap.String = [strTP, ' / ', strTP];
 
 % update tumor points
 data_main.Point.ixm = ixm;

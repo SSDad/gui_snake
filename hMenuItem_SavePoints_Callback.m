@@ -7,11 +7,11 @@ dataPath = data_main.dataPath;
 matFile = data_main.matFile;
 
  [~, fn1, ~] = fileparts(matFile);
- ffn = fullfile(dataPath, [fn1, '_points.mat']);
+ ffn = fullfile(dataPath, [fn1, '_Point.mat']);
  
- points = data_main.Point.AllPoint;
+ Point = data_main.Point;
  
- save(ffn, 'points');
+ save(ffn, 'Point');
  
 % % turn off 'Delete Contour' button 
 % data_main.hPushButton.DeleteSnake.Visible = 'off';

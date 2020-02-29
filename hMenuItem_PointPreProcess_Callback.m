@@ -2,7 +2,24 @@ function hMenuItem_PointPreProcess_Callback(src, evnt)
 
 hFig_main = ancestor(src, 'Figure');
 data_main = guidata(hFig_main);
-hPlotObj = data_main.hPlotObj;
+% hPlotObj = data_main.hPlotObj;
+
+dataPath = data_main.dataPath;
+matFile = data_main.matFile;
+
+ [~, fn1, ~] = fileparts(matFile);
+ ffn = fullfile(dataPath, [fn1, '_Point.mat']);
+if exist(ffn, 'file')
+    
+    hWB = waitbar(0, 'Loading points...');
+
+    load(ffn)
+    xi = Point.xi;
+    yi = Point.yi;
+    ixm = Point.ixm;
+    pause(2);
+
+else
 
 x0 = data_main.x0;
 y0 = data_main.y0;
@@ -47,11 +64,14 @@ for iSlice = 1:nImages
     end
     waitbar(iSlice/nImages, hWB, 'Finding points on Diaphragm...');
 end
+
+[~, ixm] = min(abs(xi-mean(xm)));
+
+end
 waitbar(1, hWB, 'Bingo!');
 pause(2);
 close(hWB);
 
-[~, ixm] = min(abs(xi-mean(xm)));
 data_main.Point.xi = xi;
 data_main.Point.yi = yi;
 data_main.Point.ixm = ixm;

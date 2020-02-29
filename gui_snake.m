@@ -39,20 +39,9 @@ data_main.hEdit = hEdit;
 data_main.FreeHandDone = false;
 data_main.SnakeDone = false;
 data_main.LineDone = false;
+data_main.tumorLineDone = false;
 
-% data_main.hText = hText;
-% 
-% data_main.alpha = 1;
-% 
-% data_main.x = 0;
-% data_main.y = 0;
-% data_main.z = 0;
-% 
-% data_main.G4DoseLoaded = false;
-% data_main.GammaMap = false;
-% 
-% data_main.profFigOpen = false;
-% data_main.ProfileFig = false;
-% 
+data_main.Point.Done = false;
+
 %% save
 guidata(hFig_main, data_main);                

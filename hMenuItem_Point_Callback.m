@@ -16,7 +16,7 @@ ixm = data_main.Point.ixm;
 % turn off mask contour
 hPlotObj.maskCont.Visible = 'off';
 
-% show on gui
+%% show on snake gui
 iSlice = round(data_main.hSlider.snake.Value);
 str = data_main.hPopup.Neighbour.String;
 idx = data_main.hPopup.Neighbour.Value;
@@ -31,7 +31,8 @@ if ~isempty(data_main.cont{iSlice})
     hPlotObj.RightPoints.XData = xi(ixm+1:ixm+NP);
     hPlotObj.RightPoints.YData = yi(iSlice, ixm+1:ixm+NP);
 end
-% point plot
+
+%% point plot
 xx = (1:data_main.nImages)';
 if isempty(data_main.cont{iSlice})
     xx(iSlice) = nan;
@@ -63,6 +64,7 @@ posLL = Lim;
 posLL(2, 2) = posLL(1, 2);
 
 hA = data_main.hAxis.PlotPoint;
+hA.YDir = 'Reverse';
 if data_main.LineDone
     hPlotObj.UL.Position = posUL;
     hPlotObj.LL.Position = posLL;
@@ -97,11 +99,44 @@ end
 data_main.LinePos.y1 = Lim(1, 2);
 data_main.LinePos.y2 = Lim(2, 2);
 
-% tumor plot
+data_main.LinePos.x = posLL(:, 1);
+
+%% points on tumor plot
 data_main.indSS = 1:data_main.nImages;
 updateTumorPoints(data_main)
 hPlotObj.Tumor.hgPoints.Visible = 'on';
 
+% 2 line
+hA = data_main.hAxis.Tumor;
+posUL(1, 1) = xi(ixm)-50;
+posUL(2, 1) = xi(ixm)+50;
+posLL(1, 1) = posUL(1, 1);
+posLL(2, 1) = posUL(2, 1);
+
+    hPlotObj.tumorUL = line(hA, 'XData', posUL(:, 1), 'YData',  posUL(:, 2), 'Color', 'b');
+    hPlotObj.tumorLL = line(hA, 'XData', posLL(:, 1), 'YData',  posLL(:, 2), 'Color', 'g');
+
+    hPlotObj.Tumor.Text.UL = text(hA, 0, 0, '', 'Color', 'w', 'FontSize', 12);
+    hPlotObj.Tumor.Text.LL = text(hA, 0, 0, '', 'Color', 'w', 'FontSize', 12);
+    hPlotObj.Tumor.Text.Gap = text(hA, 0, 0, '', 'Color', 'w', 'FontSize', 12);
+
+% line position text
+NP = size(allP, 1);
+strNP = num2str(NP);
+    hPlotObj.Tumor.Text.UL.Position =[posUL(2,1) posUL(2,2)];
+    hPlotObj.Tumor.Text.UL.String = ['0  / ', strNP];
+    hPlotObj.Tumor.Text.UL.VerticalAlignment = 'top';
+    
+    hPlotObj.Tumor.Text.LL.Position = [posLL(2,1) posLL(2,2)];
+    hPlotObj.Tumor.Text.LL.String = ['0 / ', strNP];
+    hPlotObj.Tumor.Text.LL.VerticalAlignment = 'bottom';
+    
+%     junk = (posUL(1,:)+posLL(1,:))/2;
+    hPlotObj.Tumor.Text.Gap.Position = (posUL(1,:)+posLL(1,:))/2;
+    hPlotObj.Tumor.Text.Gap.HorizontalAlignment = 'right';
+    hPlotObj.Tumor.Text.Gap.String = [strNP, ' / ', strNP];
+
+%% menu...
 data_main.hMenuItem.Tumor.Points.Enable = 'on';
 data_main.hMenuItem.Tumor.Points.Checked = 'on';
 
