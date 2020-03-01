@@ -10,7 +10,8 @@ hPlotObj = data_main.hPlotObj;
 recPos = src.Position;
 % I = hPlotObj.snakeImage.CData;
 Images = data_main.Images;
-sV = data_main.sliderValue;
+% sV = data_main.sliderValue;
+sV = round(data_main.hSlider.snake.Value);
 I = rot90(Images{sV}, 3);
 
 contrastRectLim(1) = recPos(1);

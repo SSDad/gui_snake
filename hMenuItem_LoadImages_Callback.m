@@ -59,16 +59,11 @@ data_main.FoV = str2num(data_main.hEdit.ImageInfo(1).String);
 data_main.dx = data_main.FoV/data_main.ImageSize;
 data_main.dy = data_main.dx;
 
-% data_main.ImageSize = str2num(data_main.hEdit.ImageInfo(2).String);
-
 data_main.hEdit.ImageInfo(2).String = num2str(nI);
 data_main.hEdit.ImageInfo(2).ForegroundColor = 'c';
 
 data_main.hEdit.ImageInfo(3).String = num2str(data_main.dx);
 data_main.hEdit.ImageInfo(3).ForegroundColor = 'c';
-
-% data_main.dx = 3.5;
-% data_main.dy = 3.5;
 
 % check previously saved snakes
 [~, fn1, ~] = fileparts(matFile);
@@ -92,7 +87,7 @@ data_main.FreeHandDone = false;
 data_main.SnakeDone = false;
 data_main.AllPointDone = false;
 
-waitbar(2/3, hWB, 'Initializing GUI...');
+waitbar(2/3, hWB, 'Fetching tumor contours...');
 %% initialize Tumor panel
 guidata(hFig_main, data_main);
 initTumorPanel(hFig_main)

@@ -29,19 +29,19 @@ function hUL_callback(src, evnt)
     hPlotObj.tumorUL.YData = [y2 y2];
     hPlotObj.tumorLL.YData = [y1 y1];
     
-NP = size(allP, 1);
+TP = size(allP, 1)-sum(isnan(allP(:, 2)));
 UP = sum(allP(:,2)>y2);
 LP = sum(allP(:,2)<y1);
-strNP = num2str(NP);
+strTP = num2str(TP);
 strUP = num2str(UP);
 strLP = num2str(LP);
-strGP = num2str(NP-UP-LP);
+strGP = num2str(TP-UP-LP);
     hPlotObj.Tumor.Text.UL.Position(2) = y2;
-    hPlotObj.Tumor.Text.UL.String =[strUP, ' / ', strNP];
+    hPlotObj.Tumor.Text.UL.String =[strUP, ' / ', strTP];
     hPlotObj.Tumor.Text.LL.Position(2) = y1;
-    hPlotObj.Tumor.Text.LL.String = [strLP, ' / ', strNP];
+    hPlotObj.Tumor.Text.LL.String = [strLP, ' / ', strTP];
     hPlotObj.Tumor.Text.Gap.Position(2) = (y2+y1)/2;
-    hPlotObj.Tumor.Text.Gap.String = [strGP, ' / ', strNP];
+    hPlotObj.Tumor.Text.Gap.String = [strGP, ' / ', strTP];
 
     if y2>y1
         data_main.Tumor.indSS = find(allP(:, 2) >= y1 & allP(:, 2) <= y2);

@@ -99,6 +99,8 @@ end
 data_main.LinePos.y1 = Lim(1, 2);
 data_main.LinePos.y2 = Lim(2, 2);
 
+data_main.LinePos.x = posLL(:, 1);
+
 %% points on tumor plot
 data_main.indSS = 1:data_main.nImages;
 updateTumorPoints(data_main)
@@ -110,6 +112,10 @@ posUL(1, 1) = xi(ixm)-50;
 posUL(2, 1) = xi(ixm)+50;
 posLL(1, 1) = posUL(1, 1);
 posLL(2, 1) = posUL(2, 1);
+if data_main.LineDone
+    hPlotObj.tumorUL.Position = posUL;
+    hPlotObj.tumorLL.Position = posLL;
+else
 
     hPlotObj.tumorUL = line(hA, 'XData', posUL(:, 1), 'YData',  posUL(:, 2), 'Color', 'b');
     hPlotObj.tumorLL = line(hA, 'XData', posLL(:, 1), 'YData',  posLL(:, 2), 'Color', 'g');
@@ -120,14 +126,18 @@ posLL(2, 1) = posUL(2, 1);
 
 % line position text
 NP = size(allP, 1);
-strNP = num2str(NP, '%4d');
-    hPlotObj.Tumor.Text.UL.Position =[posUL(2,1) ;
-    hPlotObj.Tumor.Text.UL.String = [num2str(0, '%4d'), ' / ', strNP];
+strNP = num2str(NP);
+    hPlotObj.Tumor.Text.UL.Position =[posUL(2,1) posUL(2,2)];
+    hPlotObj.Tumor.Text.UL.String = ['0  / ', strNP];
+    hPlotObj.Tumor.Text.UL.VerticalAlignment = 'top';
     
-    hPlotObj.Tumor.Text.LL.Position = posLL(2,:);
-    hPlotObj.Tumor.Text.LL.String = [num2str(0, '%4d'), ' / ', strNP];
+    hPlotObj.Tumor.Text.LL.Position = [posLL(2,1) posLL(2,2)];
+    hPlotObj.Tumor.Text.LL.String = ['0 / ', strNP];
+    hPlotObj.Tumor.Text.LL.VerticalAlignment = 'bottom';
     
-    hPlotObj.Tumor.Text.Gap.Position = (posUL(2,:)+posLL(2,:))/2;
+%     junk = (posUL(1,:)+posLL(1,:))/2;
+    hPlotObj.Tumor.Text.Gap.Position = (posUL(1,:)+posLL(1,:))/2;
+    hPlotObj.Tumor.Text.Gap.HorizontalAlignment = 'right';
     hPlotObj.Tumor.Text.Gap.String = [strNP, ' / ', strNP];
 
 %% menu...
