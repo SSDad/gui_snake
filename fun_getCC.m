@@ -22,12 +22,14 @@ for iC = 1:nC
         bwCAll{iC} = bwC;
 
         B = bwboundaries(bwC);
+        pA = zeros(1, length(B));
         for n = 1:length(B)
             pA(n) = polyarea(B{n}(:, 1), B{n}(:, 2));
         end
 
         [polyA(iC, 1), idx] = max(pA);
         polyA(iC, 2) = length(B);
+        
         CC{iC} = fliplr(B{idx});
 
         mask(:,:,iC) = poly2mask(CC{iC}(:, 1), CC{iC}(:, 2), M, N);
